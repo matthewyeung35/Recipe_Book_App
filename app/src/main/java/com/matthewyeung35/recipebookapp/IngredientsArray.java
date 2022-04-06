@@ -1,19 +1,47 @@
 package com.matthewyeung35.recipebookapp;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class IngredientsArray {
-    ArrayList<Ingredient> ingredientsArray;
+    private static IngredientsArray instance;
+    private static ArrayList<Ingredient> allIngredients;
 
-    public IngredientsArray(ArrayList<Ingredient> ingredientsArray) {
-        this.ingredientsArray = ingredientsArray;
+    private IngredientsArray() {
+        if (allIngredients == null){
+            allIngredients = new ArrayList<>();
+            initData();
+        }
     }
 
-    public ArrayList<Ingredient> getIngredientsArray() {
-        return ingredientsArray;
+    private void initData() {
+        allIngredients.add(new Ingredient(-1, ""));
     }
 
-    public void setIngredientsArray(ArrayList<Ingredient> ingredientsArray) {
-        this.ingredientsArray = ingredientsArray;
+    public static IngredientsArray getInstance(){
+        if (instance != null){
+            return instance;
+        }else {
+            instance = new IngredientsArray();
+            return instance;
+        }
+    }
+
+    public static ArrayList<Ingredient> getAllIngredients() {
+        return allIngredients;
+    }
+
+    public static boolean addIngredient(Ingredient ingredient){
+        return allIngredients.add(ingredient);
+    }
+
+    public static boolean removeIngredient(Ingredient ingredient){
+        return allIngredients.remove(ingredient);
+    }
+
+    public String dataToJson(){
+        Gson gson = new Gson();
+        return gson.toJson(allIngredients);
     }
 }

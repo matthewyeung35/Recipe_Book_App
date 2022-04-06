@@ -46,7 +46,10 @@ public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredient
         holder.btnDeleteIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "deleted ingredient", Toast.LENGTH_SHORT).show();
+                if (IngredientsArray.getInstance().removeIngredient(ingredients.get(position)) == true){
+                    Toast.makeText(context, "deleted ingredient", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                }
             }
         });
 

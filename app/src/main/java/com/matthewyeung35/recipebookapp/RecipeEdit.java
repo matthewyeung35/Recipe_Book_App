@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class RecipeEdit extends AppCompatActivity {
     private ActivityRecipeEditBinding binding;
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private IngredientsArray ingredients;
 
 
     @Override
@@ -24,8 +24,6 @@ public class RecipeEdit extends AppCompatActivity {
         binding = ActivityRecipeEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // for testing ingredients
-        ingredients.add(new Ingredient(1, "egg"));
 
         resetIngredientsAdapter();
 
@@ -37,7 +35,7 @@ public class RecipeEdit extends AppCompatActivity {
         binding.btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredients.add(new Ingredient(-1, ""));
+                ingredients.getInstance().addIngredient(new Ingredient(-1,""));
                 resetIngredientsAdapter();
             }
         });
@@ -47,7 +45,7 @@ public class RecipeEdit extends AppCompatActivity {
         binding.btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RecipeEdit.this, "addrecipe", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RecipeEdit.this, "ingredients:" + ingredients.getInstance().dataToJson() , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -55,7 +53,7 @@ public class RecipeEdit extends AppCompatActivity {
 
     private void resetIngredientsAdapter(){
         AddIngredientViewAdapter adapter = new AddIngredientViewAdapter(RecipeEdit.this);
-        adapter.setIngredients(ingredients);
+        adapter.setIngredients(ingredients.getInstance().getAllIngredients());
         binding.ingredientRecylerView.setAdapter(adapter);
         binding.ingredientRecylerView.setLayoutManager(new LinearLayoutManager(RecipeEdit.this));
     }
