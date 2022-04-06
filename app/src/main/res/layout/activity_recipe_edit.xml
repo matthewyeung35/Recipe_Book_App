@@ -61,20 +61,32 @@
                 android:background="@drawable/editshape"
                 android:hint="@string/serving" />
 
-            <EditText
-                android:id="@+id/edtIngredient"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredientRecylerView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/edtServing"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/editshape"
-                android:hint="Ingredient" />
+                android:layout_marginTop="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/btnAddIngredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ingredientRecylerView"
+                android:layout_centerHorizontal="true"
+                android:text="Add more ingredients"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"/>
+
 
             <EditText
                 android:id="@+id/edtSteps"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_below="@+id/edtIngredient"
+                android:layout_below="@+id/btnAddIngredient"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
                 android:hint="@string/cooking_steps" />
