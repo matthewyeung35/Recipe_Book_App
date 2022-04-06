@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeEdit"
+    android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/editshape"
+                android:hint="@string/recipe_name" />
+
+            <EditText
+                android:id="@+id/edtDesc"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/edtName"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editshape"
+                android:hint="@string/description" />
+
+
+            <ImageView
+                android:id="@+id/imgPhoto"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/edtDesc"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <Button
+                android:id="@+id/btnAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtDesc"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_toRightOf="@+id/imgPhoto"
+                android:text="@string/add_photo"
+                android:textAllCaps="false" />
+
+            <EditText
+                android:id="@+id/edtServing"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/imgPhoto"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editshape"
+                android:hint="@string/serving" />
+
+            <EditText
+                android:id="@+id/edtIngredient"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/edtServing"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editshape"
+                android:hint="Ingredient" />
+
+            <EditText
+                android:id="@+id/edtSteps"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@+id/edtIngredient"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editshape"
+                android:hint="@string/cooking_steps" />
+
+            <EditText
+                android:id="@+id/edtComments"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/edtSteps"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editshape"
+                android:hint="@string/extra_comments" />
+
+            <Button
+                android:id="@+id/btnAddRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtComments"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/add_recipe"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

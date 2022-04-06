@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp.ui.gallery;
+package com.matthewyeung35.recipebookapp.ui.favourite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.matthewyeung35.recipebookapp.databinding.FragmentGalleryBinding;
+import com.matthewyeung35.recipebookapp.databinding.FragmentFavouriteBinding;
 
-public class GalleryFragment extends Fragment {
+
+public class FavouriteFragment extends Fragment {
     private TextView txt1;
 
-    private FragmentGalleryBinding binding;
+    private FragmentFavouriteBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        FavouriteViewModel favouriteViewModel =
+                new ViewModelProvider(this).get(FavouriteViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentFavouriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-
+        favouriteViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         return root;
     }

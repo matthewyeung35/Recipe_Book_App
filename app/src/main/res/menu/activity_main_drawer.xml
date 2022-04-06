@@ -9,9 +9,13 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_plus"
+            android:title="@string/add_new_recipe" />
+        <item
+            android:id="@+id/nav_favourite"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_favourite" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -20,10 +24,7 @@
             android:id="@+id/nav_testing"
             android:icon="@drawable/ic_setting"
             android:title="testing" />
-        <item
-            android:id="@+id/nav_toast"
-            android:icon="@drawable/ic_setting"
-            android:title="testingToast" />
+
 
     </group>
 </menu>
