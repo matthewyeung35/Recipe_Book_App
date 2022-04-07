@@ -127,6 +127,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // swap the condition of favourite on call
+    public boolean changeFavourite(Recipe recipe){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString;
+        Boolean result;
+        if (recipe.isFavourite()){
+            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = " + "0" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+        }else{
+            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = " + "1" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+        }
+        db.execSQL(queryString);
+        return true;
+    }
+
 
 
 

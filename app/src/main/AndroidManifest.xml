@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecipeBookApp">
         <activity
+            android:name=".RecipeDetails"
+            android:exported="false"
+             android:label="@string/recipeDetails" />
+        <activity
             android:name=".RecipeEdit"
             android:exported="false"
-            android:label="@string/recipeEditName"/>
+            android:label="@string/recipeEditName" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
