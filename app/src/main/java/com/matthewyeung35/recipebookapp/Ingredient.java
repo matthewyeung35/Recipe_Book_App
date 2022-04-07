@@ -1,19 +1,19 @@
 package com.matthewyeung35.recipebookapp;
 
 public class Ingredient {
-    int amount;
+    float amount;
     String food;
 
-    public Ingredient(int amount, String food) {
+    public Ingredient(float amount, String food) {
         this.amount = amount;
         this.food = food;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

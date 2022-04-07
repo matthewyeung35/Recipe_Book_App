@@ -1,6 +1,7 @@
 package com.matthewyeung35.recipebookapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredientViewAdapter.ViewHolder> {
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private IngredientsArray ingredients;
     private Context context;
 
     public AddIngredientViewAdapter(Context context) {
         this.context = context;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients){
+    public void setIngredients(IngredientsArray ingredients){
         this.ingredients = ingredients;
         notifyDataSetChanged();
     }
@@ -36,35 +37,32 @@ public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredient
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if (ingredients.get(position).getAmount() == -1){
+        if (ingredients.getInstance().getAllIngredients().get(position).getAmount() == -1){
             holder.edtIngredientAmount.setText("");
         } else{
-            holder.edtIngredientAmount.setText(String.valueOf(ingredients.get(position).getAmount()));
+            holder.edtIngredientAmount.setText(String.valueOf(ingredients.getInstance().getAllIngredients().get(position).getAmount()));
         }
-        holder.edtIngredient.setText(ingredients.get(position).getFood());
+        holder.edtIngredient.setText(ingredients.getInstance().getAllIngredients().get(position).getFood());
 
         holder.btnDeleteIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IngredientsArray.getInstance().removeIngredient(ingredients.get(position)) == true){
+                if (IngredientsArray.getInstance().removeIngredient(ingredients.getInstance().getAllIngredients().get(position)) == true){
                     Toast.makeText(context, "deleted ingredient", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             }
         });
-
-
     }
+
 
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        return ingredients.getInstance().getAllIngredients().size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private EditText edtIngredientAmount, edtIngredient;
+        public EditText edtIngredientAmount, edtIngredient;
         private ImageView btnDeleteIngredient;
 
         public ViewHolder(@NonNull View itemView) {
