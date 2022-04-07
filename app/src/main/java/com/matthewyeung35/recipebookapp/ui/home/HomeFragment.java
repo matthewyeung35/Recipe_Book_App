@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.matthewyeung35.recipebookapp.DataBaseHelper;
 import com.matthewyeung35.recipebookapp.MainViewAdapter;
 import com.matthewyeung35.recipebookapp.databinding.FragmentHomeBinding;
+import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 
@@ -38,14 +39,8 @@ public class HomeFragment extends Fragment {
         mainRecyclerView.setAdapter(adapter);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //get data from database
         ArrayList<Recipe> recipes = dataBaseHelper.getDb();
-
-//        ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
-//        testing_ingredient.add(new Ingredient(1,"food"));
-//        ArrayList<Recipe> recipe_array = new ArrayList<Recipe>();
-//        recipe_array.add(new Recipe(-1,"a", "a", 1, testing_ingredient,"desc", "steps", "comments", false));
-//        ArrayList<Recipe> recipes = recipe_array;
-
         adapter.setRecipes(recipes);
 
         return root;

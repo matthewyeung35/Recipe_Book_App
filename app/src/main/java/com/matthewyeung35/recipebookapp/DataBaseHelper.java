@@ -71,8 +71,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean deleteOne(Recipe recipe){
-        //TODO delete from db
-        return false;
+        //try to find customerModel in database, and delete it and return true. If can't find, return false
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + RECIPE_TABLE + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 

@@ -16,17 +16,38 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.matthewyeung35.recipebookapp.databinding.ActivityMainBinding;
+import com.matthewyeung35.recipebookapp.objects.Ingredient;
+import com.matthewyeung35.recipebookapp.objects.Recipe;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO Create a initial splash screen
 
+        //initialize database on create
+        dataBaseHelper = new DataBaseHelper(this);
+        ArrayList<Recipe> recipes = dataBaseHelper.getDb();
+
+        //sample data on create app, create a sample recipe if there is nothing in database
+        if (recipes.size() == 0){
+            //sample data on create
+            ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
+            testing_ingredient.add(new Ingredient(1,"egg"));
+            testing_ingredient.add(new Ingredient(0.5F,"tsbp salt"));
+            Recipe new_recipe = new Recipe(-1,"Your recipe name", "IMAGE DUMMY", 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
+            dataBaseHelper.addOne(new_recipe);
+        }
+
+
+        //initialize views
         initView();
 
 

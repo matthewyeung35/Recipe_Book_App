@@ -1,6 +1,8 @@
 package com.matthewyeung35.recipebookapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHolder> {
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private Context context;
+    private DataBaseHelper dataBaseHelper;
 
     public MainViewAdapter(Context context) {
         this.context = context;
@@ -49,10 +52,39 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         holder.txtCardName.setText(recipes.get(position).getName());
         holder.txtCardDesc.setText(recipes.get(position).getShotDesc());
 
+        // on press on the card itself, move to details page
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "fixme", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // delete current recipe on click
+        holder.btnDeleteRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure you want to delete " + recipes.get(position).getName() + " ?");
+                builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Recipe delete_recipe = recipes.get(position);
+                        dataBaseHelper = new DataBaseHelper(context);
+                        dataBaseHelper.deleteOne(delete_recipe);
+                        recipes = dataBaseHelper.getDb();
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ;
+                    }
+                });
+                builder.create().show();
             }
         });
     }
@@ -66,6 +98,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         private ImageView imgCardPhoto;
         private TextView txtCardName, txtCardDesc;
         private CardView parent;
+        private ImageView btnDeleteRecipe;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +106,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
             txtCardName = itemView.findViewById(R.id.txtCardName);
             txtCardDesc = itemView.findViewById(R.id.txtCardDesc);
             parent = itemView.findViewById(R.id.mainRecParent);
+            btnDeleteRecipe = itemView.findViewById(R.id.btnDeleteRecipe);
 
         }
     }
