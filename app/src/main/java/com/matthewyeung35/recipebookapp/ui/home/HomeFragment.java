@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,16 +11,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.matthewyeung35.recipebookapp.AddIngredientViewAdapter;
 import com.matthewyeung35.recipebookapp.DataBaseHelper;
-import com.matthewyeung35.recipebookapp.MainActivity;
 import com.matthewyeung35.recipebookapp.MainViewAdapter;
-import com.matthewyeung35.recipebookapp.R;
-import com.matthewyeung35.recipebookapp.RecipeEdit;
 import com.matthewyeung35.recipebookapp.databinding.FragmentHomeBinding;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,17 +30,22 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        //TODO delete these later
-        final TextView textHome = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textHome::setText);
+        dataBaseHelper = new DataBaseHelper(getContext());
 
         //adapter
         final RecyclerView mainRecyclerView = binding.mainRecyclerView;
-        MainViewAdapter adapter = new AddIngredientViewAdapter(HomeFragment.getActivity());
+        MainViewAdapter adapter = new MainViewAdapter(getContext());
         mainRecyclerView.setAdapter(adapter);
-        mainRecyclerView.setLayoutManager(new LinearLayoutManager(HomeFragment.this));
+        mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         ArrayList<Recipe> recipes = dataBaseHelper.getDb();
+
+//        ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
+//        testing_ingredient.add(new Ingredient(1,"food"));
+//        ArrayList<Recipe> recipe_array = new ArrayList<Recipe>();
+//        recipe_array.add(new Recipe(-1,"a", "a", 1, testing_ingredient,"desc", "steps", "comments", false));
+//        ArrayList<Recipe> recipes = recipe_array;
+
         adapter.setRecipes(recipes);
 
         return root;

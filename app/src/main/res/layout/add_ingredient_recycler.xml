@@ -11,10 +11,10 @@
         <EditText
             android:id="@+id/edtIngredientAmount"
             android:layout_width="0dp"
+            android:layout_weight="0.3"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.3"
             android:background="@drawable/editshape"
             android:hint="Amount"
             android:inputType="numberDecimal"/>

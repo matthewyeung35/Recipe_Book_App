@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -28,6 +29,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_STEPS = "COLUMN_STEPS";
     public static final String COLUMN_COMMENTS = "COLUMN_COMMENTS";
     public static final String COLUMN_FAVOURITE = "COLUMN_FAVOURITE";
+
+    public static final String TAG = "DataBaseHelper";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "recipe.db", null, 1);
@@ -75,6 +78,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // takes all data from db and return as an array of recipe object
     public ArrayList<Recipe> getDb(){
+        Log.d(TAG,"Getting database...");
+
         ArrayList<Recipe> resultArray = new ArrayList<>();
 
         String queryString = "SELECT * FROM " + RECIPE_TABLE;
