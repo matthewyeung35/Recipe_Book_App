@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.objects;
 
 public class Ingredient {
     float amount;

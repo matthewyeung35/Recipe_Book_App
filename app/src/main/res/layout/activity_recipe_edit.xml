@@ -59,7 +59,8 @@
                 android:layout_below="@+id/imgPhoto"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
-                android:hint="@string/serving" />
+                android:hint="@string/serving"
+                android:inputType="number"/>
 
 
             <androidx.recyclerview.widget.RecyclerView

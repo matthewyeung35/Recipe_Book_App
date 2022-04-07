@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.objects;
 
 import com.google.gson.Gson;
 
@@ -49,5 +49,10 @@ public class IngredientsArray {
     public String dataToJson(){
         Gson gson = new Gson();
         return gson.toJson(allIngredients);
+    }
+
+    public void clearArray(){
+        allIngredients.removeAll(allIngredients);
+        initData();
     }
 }

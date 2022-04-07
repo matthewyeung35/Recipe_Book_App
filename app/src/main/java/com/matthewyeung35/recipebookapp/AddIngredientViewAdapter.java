@@ -1,7 +1,6 @@
 package com.matthewyeung35.recipebookapp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 
 public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredientViewAdapter.ViewHolder> {
     private IngredientsArray ingredients;
@@ -37,13 +36,23 @@ public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredient
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if (ingredients.getInstance().getAllIngredients().get(position).getAmount() == -1){
+        float ingredient_amount = ingredients.getInstance().getAllIngredients().get(position).getAmount();
+        // if it's a new array, set amount to empty str
+        if (ingredient_amount == -1){
             holder.edtIngredientAmount.setText("");
         } else{
-            holder.edtIngredientAmount.setText(String.valueOf(ingredients.getInstance().getAllIngredients().get(position).getAmount()));
+            // if have amount value
+            //remove .0 from amount if full number
+            String [] arrayOfFloatInput = String.valueOf(ingredient_amount).split("\\.");
+            if (arrayOfFloatInput[1].equals("0")){
+                holder.edtIngredientAmount.setText(arrayOfFloatInput[0]);
+            }else{
+                holder.edtIngredientAmount.setText(String.valueOf(ingredient_amount));
+            }
         }
         holder.edtIngredient.setText(ingredients.getInstance().getAllIngredients().get(position).getFood());
 
+        // for delete one ingredient button: remove it from arraylist
         holder.btnDeleteIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

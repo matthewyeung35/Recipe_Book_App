@@ -9,14 +9,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.matthewyeung35.recipebookapp.AddIngredientViewAdapter;
+import com.matthewyeung35.recipebookapp.DataBaseHelper;
+import com.matthewyeung35.recipebookapp.MainActivity;
+import com.matthewyeung35.recipebookapp.MainViewAdapter;
 import com.matthewyeung35.recipebookapp.R;
+import com.matthewyeung35.recipebookapp.RecipeEdit;
 import com.matthewyeung35.recipebookapp.databinding.FragmentHomeBinding;
+import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+    private DataBaseHelper dataBaseHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -26,12 +37,17 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //TODO delete these later
         final TextView textHome = binding.textHome;
-        final TextView textView2 = binding.textView2;
-        final TextView textView3 = binding. textView3;
-        textView3.setText(R.string.hello_blank_fragment);
-
         homeViewModel.getText().observe(getViewLifecycleOwner(), textHome::setText);
+
+        //adapter
+        final RecyclerView mainRecyclerView = binding.mainRecyclerView;
+        MainViewAdapter adapter = new AddIngredientViewAdapter(HomeFragment.getActivity());
+        mainRecyclerView.setAdapter(adapter);
+        mainRecyclerView.setLayoutManager(new LinearLayoutManager(HomeFragment.this));
+        ArrayList<Recipe> recipes = dataBaseHelper.getDb();
+        adapter.setRecipes(recipes);
 
         return root;
     }

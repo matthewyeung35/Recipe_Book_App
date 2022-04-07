@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.objects;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,9 @@ public class Recipe {
     String shotDesc;
     String steps;
     String comments;
+    boolean favourite;
 
-    public Recipe(int id, String name, String image, int serving, ArrayList<Ingredient> ingredients, String shotDesc, String steps, String comments) {
+    public Recipe(int id, String name, String image, int serving, ArrayList<Ingredient> ingredients, String shotDesc, String steps, String comments, boolean favourite) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -22,6 +23,7 @@ public class Recipe {
         this.shotDesc = shotDesc;
         this.steps = steps;
         this.comments = comments;
+        this.favourite = favourite;
     }
 
     public int getId() {
@@ -86,5 +88,13 @@ public class Recipe {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }

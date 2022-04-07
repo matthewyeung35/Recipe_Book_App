@@ -12,11 +12,12 @@
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/activity_recipe_edit.xml" value="0.3140625" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/add_ingredient_recycler.xml" value="0.5546875" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/app_bar_main.xml" value="0.5546875" />
-        <entry key="..\:/programming/MyApplication/app/src/main/res/layout/content_main.xml" value="0.6010158013544018" />
+        <entry key="..\:/programming/MyApplication/app/src/main/res/layout/content_main.xml" value="0.3333333333333333" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/fragment_gallery.xml" value="0.5546875" />
-        <entry key="..\:/programming/MyApplication/app/src/main/res/layout/fragment_home.xml" value="0.5546875" />
+        <entry key="..\:/programming/MyApplication/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/fragment_slideshow.xml" value="0.22" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/fragment_testing.xml" value="0.3140625" />
+        <entry key="..\:/programming/MyApplication/app/src/main/res/layout/main_recycler.xml" value="0.42916666666666664" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/layout/nav_header_main.xml" value="0.5546875" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/menu/activity_main_drawer.xml" value="0.5546875" />
         <entry key="..\:/programming/MyApplication/app/src/main/res/menu/main.xml" value="0.5546875" />
