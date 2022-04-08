@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             Recipe new_recipe = new Recipe(-1,"Your recipe name", "IMAGE DUMMY", 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
             dataBaseHelper.addOne(new_recipe);
         }
-
         //initialize views
         initView();
     }

@@ -2,13 +2,20 @@ package com.matthewyeung35.recipebookapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,7 @@ import java.util.ArrayList;
 public class RecipeDetails extends AppCompatActivity {
     private ActivityRecipeDetailsBinding binding;
     Recipe recipe;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +45,10 @@ public class RecipeDetails extends AppCompatActivity {
 
             }
         }
-
-
-
-
     }
 
     private void initView(Recipe recipe) {
+        dialog = new Dialog(this);
         binding.txtDetailName.setText(recipe.getName());
         binding.txtDetailDesc.setText(recipe.getShotDesc());
         binding.txtDetailServing.setText(String.valueOf(recipe.getServing()));
@@ -59,13 +64,11 @@ public class RecipeDetails extends AppCompatActivity {
         binding.txtDetailSteps.setText(recipe.getSteps());
         binding.txtDetailComments.setText(recipe.getComments());
 
+        // calculator
         binding.btnDetailCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeDetails.this,PopCalculator.class);
-                intent.putExtra("amount",recipe.getServing());
-                startActivity(intent);
-
+                calculatorOnClick();
             }
         });
 
@@ -80,26 +83,51 @@ public class RecipeDetails extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void calculatorOnClick() {
+        dialog.setContentView(R.layout.activity_pop_calculator);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        //after user accessing the pop up calculator, update the ingredients amount accordingly
-        if (GlobalVar.getInstance().isPop_to_details()){
-            GlobalVar.getInstance().setPop_to_details(false);
-            int new_amount = GlobalVar.getInstance().getIngredient_amount();
+        Button btnChangeServing = dialog.findViewById(R.id.btnChangeServing);
+        EditText edtServingEditor = dialog.findViewById(R.id.edtServingEditor);
+        ImageView imgAddbox = dialog.findViewById(R.id.imgAddBox);
+        ImageView imgMinusBox = dialog.findViewById(R.id.imgMinusBox);
+        edtServingEditor.setText(String.valueOf(recipe.getServing()));
 
-            double percentage_change = new_amount / (double)recipe.getServing();
-            Toast.makeText(this, String.valueOf(percentage_change), Toast.LENGTH_SHORT).show();
-            ArrayList<Ingredient> ingredients = recipe.getIngredients();
-            ArrayList<Ingredient> new_ingredients = new ArrayList<>();
-            for (Ingredient i: ingredients){
-                new_ingredients.add(new Ingredient((float) (i.getAmount()*percentage_change), i.getFood()));
+        //pop up button onclicks
+        imgAddbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtServingEditor.setText(String.valueOf(Integer.parseInt(edtServingEditor.getText().toString()) + 1));
             }
-            recipe.setServing(new_amount);
-            recipe.setIngredients(new_ingredients);
-            initView(recipe);
-        }
+        });
 
+        imgMinusBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Integer.parseInt(edtServingEditor.getText().toString()) > 1){
+                    edtServingEditor.setText(String.valueOf(Integer.parseInt(edtServingEditor.getText().toString()) -1));
+                }
+            }
+        });
+        btnChangeServing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int new_amount = Integer.parseInt(edtServingEditor.getText().toString());
+                double percentage_change = new_amount / (double)recipe.getServing();
+                ArrayList<Ingredient> ingredients = recipe.getIngredients();
+                ArrayList<Ingredient> new_ingredients = new ArrayList<>();
+                for (Ingredient i: ingredients){
+                    new_ingredients.add(new Ingredient((float) (i.getAmount()*percentage_change), i.getFood()));
+                }
+                recipe.setServing(new_amount);
+                recipe.setIngredients(new_ingredients);
+                dialog.dismiss();
+                initView(recipe);
+            }
+        });
+        dialog.show();
     }
+
+
 }

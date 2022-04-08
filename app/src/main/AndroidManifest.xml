@@ -10,10 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecipeBookApp">
         <activity
-            android:name=".PopCalculator"
-            android:exported="false"
-            android:theme="@style/Theme.RecipeBookApp.Pop"/>
-        <activity
             android:name=".RecipeDetails"
             android:exported="false"
              android:label="@string/recipeDetails" />
