@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 
 public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredientViewAdapter.ViewHolder> {
@@ -36,19 +37,13 @@ public class AddIngredientViewAdapter extends RecyclerView.Adapter<AddIngredient
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        float ingredient_amount = ingredients.getInstance().getAllIngredients().get(position).getAmount();
+        Ingredient ingredient = ingredients.getInstance().getAllIngredients().get(position);
         // if it's a new array, set amount to empty str
-        if (ingredient_amount == -1){
+        if (ingredient.getAmount() == -1){
             holder.edtIngredientAmount.setText("");
         } else{
-            // if have amount value
-            //remove .0 from amount if full number
-            String [] arrayOfFloatInput = String.valueOf(ingredient_amount).split("\\.");
-            if (arrayOfFloatInput[1].equals("0")){
-                holder.edtIngredientAmount.setText(arrayOfFloatInput[0]);
-            }else{
-                holder.edtIngredientAmount.setText(String.valueOf(ingredient_amount));
-            }
+            // return the ingredient amount
+            holder.edtIngredientAmount.setText(ingredient.getAmountStr());
         }
         holder.edtIngredient.setText(ingredients.getInstance().getAllIngredients().get(position).getFood());
 

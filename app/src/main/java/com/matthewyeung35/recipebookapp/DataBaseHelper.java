@@ -85,10 +85,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // takes a id of recipe, return the recipe item
+    public Recipe getOne(int id){
+        Log.d(TAG,"Getting one from database, Id: " + id);
+        String queryString = "SELECT * FROM " + RECIPE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+        int customerID = cursor.getInt(0);
+        String name = cursor.getString(1);
+        String image = cursor.getString(2);
+        int serving = cursor.getInt(3);
+        String ingredients_str = cursor.getString(4);
+        String desc = cursor.getString(5);
+        String steps = cursor.getString(6);
+        String comments = cursor.getString(7);
+        boolean favourite = cursor.getInt(8) == 1 ? true:false;
+        // ingredients from string to object
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Ingredient>>(){}.getType();
+        ArrayList<Ingredient> ingredients = gson.fromJson(ingredients_str, type);
+        // create a new CustomerModel class item and add it to the new array
+        Recipe recipe = new Recipe(customerID, name, image, serving, ingredients, desc, steps, comments, favourite);
+
+        return recipe;
+    }
+
+
     // takes all data from db and return as an array of recipe object
     public ArrayList<Recipe> getDb(){
-        Log.d(TAG,"Getting database...");
-
+        Log.d(TAG,"Getting all database...");
         ArrayList<Recipe> resultArray = new ArrayList<>();
 
         String queryString = "SELECT * FROM " + RECIPE_TABLE;

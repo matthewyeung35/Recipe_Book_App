@@ -13,6 +13,16 @@ public class Ingredient {
         return amount;
     }
 
+    public String getAmountStr(){
+        // return a string value of amount. if it's a full number, return without the .0
+        String [] arrayOfFloatInput = String.valueOf(amount).split("\\.");
+        if (arrayOfFloatInput[1].equals("0")){
+            return arrayOfFloatInput[0];
+        }else{
+            return String.valueOf(amount);
+        }
+    }
+
     public void setAmount(float amount) {
         this.amount = amount;
     }

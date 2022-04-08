@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     //my color
     <color name="gray">#c8c8db</color>
+    <color name="lightgray">#E0E0E4</color>
     <color name="red">#F44336</color>
+    <color name="ingredient_btn">#989392</color>
+
+
 </resources>

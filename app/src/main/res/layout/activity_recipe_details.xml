@@ -1,9 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeDetails">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgDetail"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <RelativeLayout
+                android:id="@+id/detailRel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgDetail"
+                android:layout_margin="15dp"
+                android:background="@drawable/detailshape">
+
+
+                <TextView
+                    android:id="@+id/txtDetailName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Recipe name"
+                    android:textSize="36dp" />
+
+                <TextView
+                    android:id="@+id/txtDetailDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtDetailName"
+                    android:minHeight="150dp"
+                    android:text="Short Desc" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detailRel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailRel1"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/detailshape">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cartLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+                    <Button
+                        android:id="@+id/btnDetailCart"
+                        android:layout_width="45dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/circleshape"
+                        android:drawableTop="@drawable/ic_shopping"
+                        app:backgroundTint="@color/ingredient_btn"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/cartLayout"
+                    android:layout_marginRight="5dp">
+                    <Button
+                        android:id="@+id/btnDetailCalc"
+                        android:layout_width="45dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/circleshape"
+                        android:drawableTop="@drawable/ic_calculator"
+                        app:backgroundTint="@color/ingredient_btn"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/txtDetailServe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/servings" />
+
+                <TextView
+                    android:id="@+id/txtDetailServing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/txtDetailServe"
+                    android:text="1" />
+
+                <TextView
+                    android:id="@+id/txtDetailIngred"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtDetailServe"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/ingredients" />
+
+                <TextView
+                    android:id="@+id/txtDetailIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtDetailIngred"
+                    android:minHeight="300dp"
+                    android:text="Show All ingredients" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detailRel3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailRel2"
+                android:layout_margin="15dp"
+                android:background="@drawable/detailshape">
+
+                <TextView
+                    android:id="@+id/txtDetailSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="400dp"
+                    android:text="Steps" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detailRel4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailRel3"
+                android:layout_margin="15dp"
+                android:background="@drawable/detailshape">
+
+                <TextView
+                    android:id="@+id/txtDetailComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="300dp"
+                    android:text="Comments" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

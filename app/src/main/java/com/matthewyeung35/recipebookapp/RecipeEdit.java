@@ -27,7 +27,6 @@ public class RecipeEdit extends AppCompatActivity {
         binding = ActivityRecipeEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         //initView
         resetIngredientsAdapter();
         addPhoto();

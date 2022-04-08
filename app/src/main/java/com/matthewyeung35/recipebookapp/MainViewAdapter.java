@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +63,9 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                holder.searchView.getQuery();
                 Intent intent = new Intent(context, RecipeDetails.class);
-                intent.putExtra("recipe", recipes.get(position).getId());
+                intent.putExtra("recipeId", recipes.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -75,22 +77,26 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         }else{
             holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.gray)));
         }
+
         //update favourite on click
         holder.btnCardFavourite.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 // change condition of favourite on press
+                //update database
+                dataBaseHelper = new DataBaseHelper(context);
+                dataBaseHelper.changeFavourite(recipes.get(position));
+                // update local array
                 if (recipes.get(position).isFavourite()){
                     holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.gray)));
                     Toast.makeText(context, "Unfavourited", Toast.LENGTH_SHORT).show();
+                    recipes.get(position).setFavourite(false);
                 }else{
                     holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
                     Toast.makeText(context, "Favourited", Toast.LENGTH_SHORT).show();
+                    recipes.get(position).setFavourite(true);
                 }
-                dataBaseHelper = new DataBaseHelper(context);
-                dataBaseHelper.changeFavourite(recipes.get(position));
-                recipes = dataBaseHelper.getDb();
                 notifyDataSetChanged();
 
             }
@@ -135,6 +141,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         private TextView txtCardName, txtCardDesc;
         private CardView parent;
         private ImageView btnDeleteRecipe, btnCardFavourite;
+        private SearchView searchView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
