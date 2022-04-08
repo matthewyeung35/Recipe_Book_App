@@ -47,12 +47,8 @@ public class MainActivity extends AppCompatActivity {
             dataBaseHelper.addOne(new_recipe);
         }
 
-
         //initialize views
         initView();
-
-
-
     }
 
     private void initView() {

@@ -21,12 +21,10 @@ public class IngredientsArray {
     }
 
     public static IngredientsArray getInstance(){
-        if (instance != null){
-            return instance;
-        }else {
+        if (instance == null) {
             instance = new IngredientsArray();
-            return instance;
         }
+        return instance;
     }
 
     public static ArrayList<Ingredient> getAllIngredients() {

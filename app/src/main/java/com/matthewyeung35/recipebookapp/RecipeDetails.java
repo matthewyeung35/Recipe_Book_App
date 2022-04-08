@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class RecipeDetails extends AppCompatActivity {
     private ActivityRecipeDetailsBinding binding;
+    Recipe recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,9 @@ public class RecipeDetails extends AppCompatActivity {
         if (intent != null) {
             int recipeId = intent.getIntExtra("recipeId", -1);
             if (recipeId != -1) {
-                initView(recipeId);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeDetails.this);
+                recipe = dataBaseHelper.getOne(recipeId);
+                initView(recipe);
 
             }
         }
@@ -40,9 +43,7 @@ public class RecipeDetails extends AppCompatActivity {
 
     }
 
-    private void initView(int recipeId) {
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeDetails.this);
-        Recipe recipe = dataBaseHelper.getOne(recipeId);
+    private void initView(Recipe recipe) {
         binding.txtDetailName.setText(recipe.getName());
         binding.txtDetailDesc.setText(recipe.getShotDesc());
         binding.txtDetailServing.setText(String.valueOf(recipe.getServing()));
@@ -61,6 +62,9 @@ public class RecipeDetails extends AppCompatActivity {
         binding.btnDetailCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(RecipeDetails.this,PopCalculator.class);
+                intent.putExtra("amount",recipe.getServing());
+                startActivity(intent);
 
             }
         });
@@ -76,11 +80,26 @@ public class RecipeDetails extends AppCompatActivity {
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
-        return super.onCreateView(parent, name, context, attrs);
+    protected void onResume() {
+        super.onResume();
 
+        //after user accessing the pop up calculator, update the ingredients amount accordingly
+        if (GlobalVar.getInstance().isPop_to_details()){
+            GlobalVar.getInstance().setPop_to_details(false);
+            int new_amount = GlobalVar.getInstance().getIngredient_amount();
+
+            double percentage_change = new_amount / (double)recipe.getServing();
+            Toast.makeText(this, String.valueOf(percentage_change), Toast.LENGTH_SHORT).show();
+            ArrayList<Ingredient> ingredients = recipe.getIngredients();
+            ArrayList<Ingredient> new_ingredients = new ArrayList<>();
+            for (Ingredient i: ingredients){
+                new_ingredients.add(new Ingredient((float) (i.getAmount()*percentage_change), i.getFood()));
+            }
+            recipe.setServing(new_amount);
+            recipe.setIngredients(new_ingredients);
+            initView(recipe);
+        }
 
     }
 }

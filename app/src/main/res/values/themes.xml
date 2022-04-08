@@ -21,5 +21,13 @@
 
     <style name="Theme.RecipeBookApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.RecipeBookApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.RecipeBookApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="Theme.RecipeBookApp.Pop">
+        <item name = "android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+
+
 </resources>
