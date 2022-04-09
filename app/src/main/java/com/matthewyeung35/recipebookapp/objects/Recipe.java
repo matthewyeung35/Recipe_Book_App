@@ -9,18 +9,18 @@ public class Recipe {
     String image;
     int serving;
     ArrayList<Ingredient> ingredients;
-    String shotDesc;
+    String shortDesc;
     String steps;
     String comments;
     boolean favourite;
 
-    public Recipe(int id, String name, String image, int serving, ArrayList<Ingredient> ingredients, String shotDesc, String steps, String comments, boolean favourite) {
+    public Recipe(int id, String name, String image, int serving, ArrayList<Ingredient> ingredients, String shortDesc, String steps, String comments, boolean favourite) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.serving = serving;
         this.ingredients = ingredients;
-        this.shotDesc = shotDesc;
+        this.shortDesc = shortDesc;
         this.steps = steps;
         this.comments = comments;
         this.favourite = favourite;
@@ -66,12 +66,12 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public String getShotDesc() {
-        return shotDesc;
+    public String getShortDesc() {
+        return shortDesc;
     }
 
-    public void setShotDesc(String shotDesc) {
-        this.shotDesc = shotDesc;
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
     }
 
     public String getSteps() {

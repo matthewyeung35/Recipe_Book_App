@@ -16,7 +16,7 @@ public class IngredientsArray {
         }
     }
 
-    private void initData() {
+    public void initData() {
         allIngredients.add(new Ingredient(-1, ""));
     }
 
@@ -51,6 +51,6 @@ public class IngredientsArray {
 
     public void clearArray(){
         allIngredients.removeAll(allIngredients);
-        initData();
+
     }
 }

@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".RecipeDetails">
 
+    <include
+        android:id="@+id/detailBar"
+        layout="@layout/detail_actionbar" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/detailBar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,7 +24,8 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginTop="10dp"/>
 
             <RelativeLayout
                 android:id="@+id/detailRel1"
@@ -65,12 +70,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true">
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnDetailCart"
                         android:layout_width="45dp"
                         android:layout_height="0dp"
                         android:background="@drawable/circleshape"
-                        android:drawableTop="@drawable/ic_shopping"
+                        app:icon="@drawable/ic_shopping"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
                         app:backgroundTint="@color/ingredient_btn"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -82,16 +89,19 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/cartLayout"
                     android:layout_marginRight="5dp">
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnDetailCalc"
                         android:layout_width="45dp"
                         android:layout_height="0dp"
                         android:background="@drawable/circleshape"
-                        android:drawableTop="@drawable/ic_calculator"
+                        app:icon="@drawable/ic_calculator"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
                         app:backgroundTint="@color/ingredient_btn"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

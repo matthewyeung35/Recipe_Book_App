@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -57,7 +58,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_SERVING, recipe.getServing());
         //store ingredients as json
         cv.put(COLUMN_INGREDIENTS, gson.toJson(recipe.getIngredients()));
-        cv.put(COLUMN_SHORTDESC, recipe.getShotDesc());
+        cv.put(COLUMN_SHORTDESC, recipe.getShortDesc());
         cv.put(COLUMN_STEPS, recipe.getSteps());
         cv.put(COLUMN_COMMENTS, recipe.getComments());
         cv.put(COLUMN_FAVOURITE, recipe.isFavourite());
@@ -153,16 +154,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // swap the condition of favourite on call
+    // swap the condition of favourite on call. Takes a Recipe, will find corresponding data with id
     public boolean changeFavourite(Recipe recipe){
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString;
-        Boolean result;
         if (recipe.isFavourite()){
-            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = " + "0" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = 0" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
         }else{
-            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = " + "1" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+            queryString = "UPDATE " + RECIPE_TABLE + " SET " + COLUMN_FAVOURITE + " = 1" + " WHERE " + COLUMN_ID + " = " + recipe.getId();
         }
+        db.execSQL(queryString);
+        return true;
+    }
+
+    public boolean updateOne(Recipe recipe){
+        Gson gson = new Gson();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString =
+                "UPDATE " + RECIPE_TABLE + " SET "
+                        + COLUMN_NAME + " = '" + recipe.getName() + "',"
+                        + COLUMN_IMAGE + " = '" + recipe.getImage() + "',"
+                        + COLUMN_SERVING + " = '" + recipe.getServing() + "',"
+                        + COLUMN_INGREDIENTS + " = '" + gson.toJson(recipe.getIngredients()) + "',"
+                        + COLUMN_SHORTDESC + " = '" + recipe.getShortDesc() + "',"
+                        + COLUMN_STEPS + " = '" + recipe.getSteps() + "',"
+                        + COLUMN_COMMENTS + " = '" + recipe.getComments() + "',"
+                        + COLUMN_FAVOURITE + " = '" + recipe.isFavourite() + "'"
+                        + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+
+
         db.execSQL(queryString);
         return true;
     }

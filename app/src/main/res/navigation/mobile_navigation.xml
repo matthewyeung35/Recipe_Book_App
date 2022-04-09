@@ -15,7 +15,7 @@
         android:id="@+id/nav_favourite"
         android:name="com.matthewyeung35.recipebookapp.ui.favourite.FavouriteFragment"
         android:label="@string/menu_favourite"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_slideshow"

@@ -9,7 +9,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -20,13 +19,8 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.matthewyeung35.recipebookapp.databinding.FragmentHomeBinding;
-import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHolder> {
@@ -57,7 +51,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //TODO set photo on cardivew
         holder.txtCardName.setText(recipes.get(position).getName());
-        holder.txtCardDesc.setText(recipes.get(position).getShotDesc());
+        holder.txtCardDesc.setText(recipes.get(position).getShortDesc());
 
         // on press on the card itself, move to details page
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +68,10 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         //initialize the color of heart icon
         if (recipes.get(position).isFavourite()){
             holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
+            holder.btnCardFavourite.setImageDrawable(context.getDrawable(R.drawable.ic_heart));
         }else{
             holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.gray)));
+            holder.btnCardFavourite.setImageDrawable(context.getDrawable(R.drawable.ic_heart_border));
         }
 
         //update favourite on click
@@ -107,8 +103,8 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Are you sure you want to delete " + recipes.get(position).getName() + " ?");
-                builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                builder.setMessage(context.getString(R.string.confirm_delete) + recipes.get(position).getName() + " ?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Recipe delete_recipe = recipes.get(position);
@@ -116,11 +112,11 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
                         dataBaseHelper.deleteOne(delete_recipe);
                         recipes = dataBaseHelper.getDb();
                         notifyDataSetChanged();
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show();
 
                     }
                 });
-                builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ;

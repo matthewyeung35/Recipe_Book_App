@@ -12,7 +12,8 @@
         <activity
             android:name=".RecipeDetails"
             android:exported="false"
-             android:label="@string/recipeDetails" />
+             android:label="@string/recipeDetails"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
         <activity
             android:name=".RecipeEdit"
             android:exported="false"

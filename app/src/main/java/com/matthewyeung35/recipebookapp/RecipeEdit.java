@@ -19,7 +19,8 @@ public class RecipeEdit extends AppCompatActivity {
     private IngredientsArray ingredients;
     AddIngredientViewAdapter adapter = new AddIngredientViewAdapter(RecipeEdit.this);
     String TAG = "RecipeEdit";
-
+    int recipeId;
+    Recipe old_recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +28,38 @@ public class RecipeEdit extends AppCompatActivity {
         binding = ActivityRecipeEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //initView
-        resetIngredientsAdapter();
-        addPhoto();
+        //initialize buttons
+        btnPhoto();
         addIngredient();
-        addRecipe();
+        btnRecipe();
+
+        // if coming from edit recipe, apply existing data to the edit page
+        Intent intent = getIntent();
+        recipeId = intent.getIntExtra("recipeId", -1);
+        if (recipeId != -1){
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeEdit.this);
+            old_recipe = dataBaseHelper.getOne(recipeId);
+            binding.edtName.setText(old_recipe.getName());
+            binding.edtDesc.setText(old_recipe.getShortDesc());
+            binding.edtServing.setText(String.valueOf(old_recipe.getServing()));
+            binding.edtSteps.setText(old_recipe.getSteps());
+            binding.edtComments.setText(old_recipe.getComments());
+            if (old_recipe.getIngredients().size() != 0){
+                IngredientsArray.getInstance().clearArray();
+            }
+            for (Ingredient i: old_recipe.getIngredients()){
+                IngredientsArray.getInstance().addIngredient(i);
+            }
+        }
+
+        //initialize ingredients rec view
+        adapter.setIngredients(ingredients);
+        binding.ingredientRecylerView.setAdapter(adapter);
+        binding.ingredientRecylerView.setLayoutManager(new LinearLayoutManager(RecipeEdit.this));
 
     }
 
-    private void addPhoto() {
+    private void btnPhoto() {
         binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +98,8 @@ public class RecipeEdit extends AppCompatActivity {
         });
     }
 
-    //TODO current part
-    private void addRecipe() {
+
+    private void btnRecipe() {
         binding.btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             // on clicking the add recipe button, store all data into the recipe database
             @Override
@@ -120,28 +144,38 @@ public class RecipeEdit extends AppCompatActivity {
 
                 Log.d(TAG, "JSON ingredients" + IngredientsArray.getInstance().dataToJson());
 
-                Recipe recipe = new Recipe(-1, name, image, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
-                // add new recipe to database
+
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeEdit.this);
-                dataBaseHelper.addOne(recipe);
+                // add new recipe to database
+                if (recipeId == -1){
+                    // back to main page
+                    // clear ingredients for next entry
+                    Recipe recipe = new Recipe(-1, name, image, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    dataBaseHelper.addOne(recipe);
+                    IngredientsArray.getInstance().clearArray();
+                    IngredientsArray.getInstance().initData();
+                    adapter.notifyDataSetChanged();
 
-
-                // back to main page
-                // clear ingredients for next entry
-                IngredientsArray.getInstance().clearArray();
-                adapter.notifyDataSetChanged();
-
-                Intent intent = new Intent(RecipeEdit.this, MainActivity.class);
-                startActivity(intent);
+                    finish();
+                }else{
+                    Recipe recipe = new Recipe(old_recipe.getId(), name, image, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    // update recipe entry instead of creating a new one if coming from existing recipe
+                    dataBaseHelper.updateOne(recipe);
+                    finish();
+                }
             }
         });
-
     }
 
-    private void resetIngredientsAdapter(){
-        adapter.setIngredients(ingredients);
-        binding.ingredientRecylerView.setAdapter(adapter);
-        binding.ingredientRecylerView.setLayoutManager(new LinearLayoutManager(RecipeEdit.this));
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // also clear ingredients data on back click
+        IngredientsArray.getInstance().clearArray();
+        IngredientsArray.getInstance().initData();
     }
+
+
+
 
 }

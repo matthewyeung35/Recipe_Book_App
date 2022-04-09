@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment {
     private DataBaseHelper dataBaseHelper;
     private static final String TAG = "HomeFragment";
     private SearchView searchView;
+    private MainViewAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,12 +45,19 @@ public class HomeFragment extends Fragment {
         // search bar
         setHasOptionsMenu(true);
 
-        //use adapter
-        MainViewAdapter adapter = recViewAdapter();
+        //use adapter for rec view
+        adapter = recViewAdapter();
 
         //get data from database
         ArrayList<Recipe> recipes = dataBaseHelper.getDb();
         adapter.setRecipes(recipes);
+
+        //if no recipes, show a text instead
+        if (recipes.size()==0){
+            binding.txtNoRecipe.setVisibility(View.VISIBLE);
+        }else{
+            binding.txtNoRecipe.setVisibility(View.GONE);
+        }
 
         return root;
     }
@@ -103,6 +111,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //reset database on resume
+        ArrayList<Recipe> recipes = dataBaseHelper.getDb();
+        adapter.setRecipes(recipes);
+        adapter.notifyDataSetChanged();
+
+        // if search bar previously opened, close it
         try {
             searchView.clearFocus();
         }catch (Exception e){

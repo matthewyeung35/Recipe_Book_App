@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.RecipeBookApp.NoActionBar">
+    <style name="Theme.RecipeBookApp.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -23,10 +23,7 @@
 
     <style name="Theme.RecipeBookApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="Theme.RecipeBookApp.Pop">
-        <item name = "android:windowIsTranslucent">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>
+
 
 
 

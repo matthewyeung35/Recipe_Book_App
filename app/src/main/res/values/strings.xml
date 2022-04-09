@@ -29,4 +29,9 @@
     <string name="action_search">Search</string>
     <string name="servings">Servings:</string>
     <string name="ingredients">Ingredients:</string>
+    <string name="recipe_details">Recipe details</string>
+    <string name="confirm_delete">Are you sure you want to delete </string>
+    <string name="yes">Yes</string>
+    <string name="deleted">Deleted</string>
+    <string name="no">No</string>
 </resources>
