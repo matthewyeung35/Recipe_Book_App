@@ -32,6 +32,12 @@ public class RecipeEdit extends AppCompatActivity {
         btnPhoto();
         addIngredient();
         btnRecipe();
+        binding.detailBar.barBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // if coming from edit recipe, apply existing data to the edit page
         Intent intent = getIntent();

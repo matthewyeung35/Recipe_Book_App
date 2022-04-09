@@ -103,14 +103,14 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(context.getString(R.string.confirm_delete) + recipes.get(position).getName() + " ?");
+                builder.setMessage(context.getString(R.string.confirm_delete) + " " + recipes.get(position).getName() + " ?");
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Recipe delete_recipe = recipes.get(position);
                         dataBaseHelper = new DataBaseHelper(context);
                         dataBaseHelper.deleteOne(delete_recipe);
-                        recipes = dataBaseHelper.getDb();
+                        recipes.remove(delete_recipe);
                         notifyDataSetChanged();
                         Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show();
 

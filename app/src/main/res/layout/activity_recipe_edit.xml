@@ -5,15 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeEdit"
-    android:padding="20dp">
+    >
+
+    <include
+        android:id="@+id/detailBar"
+        layout="@layout/edit_actionbar" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/detailBar"
+        android:padding="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <EditText
                 android:id="@+id/edtName"

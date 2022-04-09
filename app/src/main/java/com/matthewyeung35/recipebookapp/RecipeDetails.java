@@ -102,7 +102,7 @@ public class RecipeDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RecipeDetails.this);
-                builder.setMessage(getText(R.string.confirm_delete) + recipe.getName() + " ?");
+                builder.setMessage(getText(R.string.confirm_delete) + " " + recipe.getName() + " ?");
                 builder.setPositiveButton(getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

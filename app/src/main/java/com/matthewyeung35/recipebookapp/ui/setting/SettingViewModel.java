@@ -1,14 +1,14 @@
-package com.matthewyeung35.recipebookapp.ui.testing;
+package com.matthewyeung35.recipebookapp.ui.setting;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TestingViewModel extends ViewModel {
+public class SettingViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public TestingViewModel() {
+    public SettingViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is testing fragment");
     }

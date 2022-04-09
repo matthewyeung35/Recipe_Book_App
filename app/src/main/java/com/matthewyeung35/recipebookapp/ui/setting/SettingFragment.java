@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp.ui.testing;
+package com.matthewyeung35.recipebookapp.ui.setting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,24 +14,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.matthewyeung35.recipebookapp.R;
-import com.matthewyeung35.recipebookapp.databinding.FragmentSlideshowBinding;
-import com.matthewyeung35.recipebookapp.databinding.FragmentTestingBinding;
-import com.matthewyeung35.recipebookapp.ui.slideshow.SlideshowViewModel;
+import com.matthewyeung35.recipebookapp.databinding.FragmentSettingBinding;
 
-public class TestingFragment extends Fragment {
 
-    private FragmentTestingBinding binding;
+public class SettingFragment extends Fragment {
+
+    private FragmentSettingBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        com.matthewyeung35.recipebookapp.ui.testing.TestingViewModel testingViewModel =
-                new ViewModelProvider(this).get(TestingViewModel.class);
+        SettingViewModel settingViewModel =
+                new ViewModelProvider(this).get(SettingViewModel.class);
 
-        binding = FragmentTestingBinding.inflate(inflater, container, false);
+        binding = FragmentSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textTesting;
-        testingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSetting;
+        settingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         setHasOptionsMenu(true);
         return root;
