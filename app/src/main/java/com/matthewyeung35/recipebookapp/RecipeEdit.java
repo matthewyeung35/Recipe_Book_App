@@ -78,9 +78,10 @@ public class RecipeEdit extends AppCompatActivity {
             //get image
             byte[] decodedString = Base64.decode(old_recipe.getImage(), Base64.DEFAULT);
             if (decodedString.length !=0){
-                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 binding.imgPhoto.setImageBitmap(bitmap);
             }
+            Log.d(TAG, "decode" + old_recipe.getImage() + "length "+ old_recipe.getImage().length());
 
         }
 
