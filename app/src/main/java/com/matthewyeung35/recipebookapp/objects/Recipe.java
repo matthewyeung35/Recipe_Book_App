@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Recipe {
     int id;
     String name;
-    byte[] image;
+    String image;
     int serving;
     ArrayList<Ingredient> ingredients;
     String shortDesc;
@@ -13,7 +13,7 @@ public class Recipe {
     String comments;
     boolean favourite;
 
-    public Recipe(int id, String name, byte[] image, int serving, ArrayList<Ingredient> ingredients, String shortDesc, String steps, String comments, boolean favourite) {
+    public Recipe(int id, String name, String image, int serving, ArrayList<Ingredient> ingredients, String shortDesc, String steps, String comments, boolean favourite) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -41,11 +41,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

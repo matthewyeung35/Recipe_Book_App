@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
 //            ByteArrayOutputStream bos = new ByteArrayOutputStream();
 //            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 //            byte[] img = bos.toByteArray();
-            byte[] img = null;
+
+            byte[] img = new byte[0];
+            String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
             ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
             testing_ingredient.add(new Ingredient(1,"egg"));
             testing_ingredient.add(new Ingredient(0.5F,"tsbp salt"));
-            Recipe new_recipe = new Recipe(-1,"Your recipe name", img, 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
+            Recipe new_recipe = new Recipe(-1,"Your recipe name", encodedImage, 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
             dataBaseHelper.addOne(new_recipe);
         }
         //initialize views

@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -144,8 +145,9 @@ public class RecipeDetails extends AppCompatActivity {
         binding.txtDetailSteps.setText(recipe.getSteps());
         binding.txtDetailComments.setText(recipe.getComments());
         //image
-        if (recipe.getImage().length !=0){
-            Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+        byte[] decodedString = Base64.decode(recipe.getImage(), Base64.DEFAULT);
+        if (decodedString.length !=0){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             binding.imgDetail.setImageBitmap(bitmap);
         }
 

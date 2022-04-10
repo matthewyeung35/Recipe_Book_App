@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,8 +76,9 @@ public class RecipeEdit extends AppCompatActivity {
                 IngredientsArray.getInstance().addIngredient(i);
             }
             //get image
-            if (old_recipe.getImage().length !=0){
-                Bitmap bitmap = BitmapFactory.decodeByteArray(old_recipe.getImage(), 0, old_recipe.getImage().length);
+            byte[] decodedString = Base64.decode(old_recipe.getImage(), Base64.DEFAULT);
+            if (decodedString.length !=0){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 binding.imgPhoto.setImageBitmap(bitmap);
             }
 
@@ -192,6 +194,7 @@ public class RecipeEdit extends AppCompatActivity {
                     img = new byte[0];
                     Log.d(TAG, "bit map null" + img.length);
                 }
+                String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
 
                 //continue
                 String steps = binding.edtSteps.getText().toString();
@@ -228,14 +231,14 @@ public class RecipeEdit extends AppCompatActivity {
                 if (recipeId == -1){
                     // back to main page
                     // clear ingredients for next entry
-                    Recipe recipe = new Recipe(-1, name, img, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    Recipe recipe = new Recipe(-1, name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
                     dataBaseHelper.addOne(recipe);
                     IngredientsArray.getInstance().clearArray();
                     IngredientsArray.getInstance().initData();
                     adapter.notifyDataSetChanged();
 
                 }else{
-                    Recipe recipe = new Recipe(old_recipe.getId(), name, img, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    Recipe recipe = new Recipe(old_recipe.getId(), name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
                     // update recipe entry instead of creating a new one if coming from existing recipe
                     dataBaseHelper.updateOne(recipe);
                 }

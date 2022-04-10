@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,9 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
         //Add image
-        if (recipe.getImage().length !=0){
-            Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+        byte[] decodedString = Base64.decode(recipe.getImage(), Base64.DEFAULT);
+        if (decodedString.length !=0){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             holder.imgCardPhoto.setImageBitmap(bitmap);
         }
         holder.txtCardName.setText(recipe.getName());
