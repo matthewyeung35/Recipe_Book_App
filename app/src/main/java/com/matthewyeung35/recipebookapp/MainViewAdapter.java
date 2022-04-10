@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +51,14 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //TODO set photo on cardivew
-        holder.txtCardName.setText(recipes.get(position).getName());
-        holder.txtCardDesc.setText(recipes.get(position).getShortDesc());
+        Recipe recipe = recipes.get(position);
+        //Add image
+        if (recipe.getImage().length !=0){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+            holder.imgCardPhoto.setImageBitmap(bitmap);
+        }
+        holder.txtCardName.setText(recipe.getName());
+        holder.txtCardDesc.setText(recipe.getShortDesc());
 
         // on press on the card itself, move to details page
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -59,14 +66,14 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
             public void onClick(View v) {
 //                holder.searchView.getQuery();
                 Intent intent = new Intent(context, RecipeDetails.class);
-                intent.putExtra("recipeId", recipes.get(position).getId());
+                intent.putExtra("recipeId", recipe.getId());
                 context.startActivity(intent);
             }
         });
 
         // favourite button
         //initialize the color of heart icon
-        if (recipes.get(position).isFavourite()){
+        if (recipe.isFavourite()){
             holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
             holder.btnCardFavourite.setImageDrawable(context.getDrawable(R.drawable.ic_heart));
         }else{
@@ -82,19 +89,18 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
                 // change condition of favourite on press
                 //update database
                 dataBaseHelper = new DataBaseHelper(context);
-                dataBaseHelper.changeFavourite(recipes.get(position));
+                dataBaseHelper.changeFavourite(recipe);
                 // update local array
-                if (recipes.get(position).isFavourite()){
+                if (recipe.isFavourite()){
                     holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.gray)));
                     Toast.makeText(context, "Unfavourited", Toast.LENGTH_SHORT).show();
-                    recipes.get(position).setFavourite(false);
+                    recipe.setFavourite(false);
                 }else{
                     holder.btnCardFavourite.setImageTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
                     Toast.makeText(context, "Favourited", Toast.LENGTH_SHORT).show();
-                    recipes.get(position).setFavourite(true);
+                    recipe.setFavourite(true);
                 }
                 notifyDataSetChanged();
-
             }
         });
 

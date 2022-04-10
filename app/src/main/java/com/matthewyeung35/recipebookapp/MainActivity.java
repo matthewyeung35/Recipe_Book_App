@@ -1,6 +1,9 @@
 package com.matthewyeung35.recipebookapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.matthewyeung35.recipebookapp.databinding.ActivityMainBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DataBaseHelper dataBaseHelper;
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +45,16 @@ public class MainActivity extends AppCompatActivity {
         //sample data on create app, create a sample recipe if there is nothing in database
         if (recipes.size() == 0){
             //sample data on create
+            //for image
+//            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_icon_miko_background);
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+//            byte[] img = bos.toByteArray();
+            byte[] img = null;
             ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
             testing_ingredient.add(new Ingredient(1,"egg"));
             testing_ingredient.add(new Ingredient(0.5F,"tsbp salt"));
-            Recipe new_recipe = new Recipe(-1,"Your recipe name", "IMAGE DUMMY", 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
+            Recipe new_recipe = new Recipe(-1,"Your recipe name", img, 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
             dataBaseHelper.addOne(new_recipe);
         }
         //initialize views

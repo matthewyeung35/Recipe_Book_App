@@ -35,4 +35,6 @@
     <string name="deleted">Deleted</string>
     <string name="no">No</string>
     <string name="edit_recipe">Edit Recipe</string>
+    <string name="from_existing_files">From existing files</string>
+    <string name="take_a_photo">Take a photo</string>
 </resources>

@@ -39,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + RECIPE_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " TEXT," + COLUMN_SERVING+ " INT, " + COLUMN_INGREDIENTS + " TEXT, "+ COLUMN_SHORTDESC+ " TEXT, " + COLUMN_STEPS + " TEXT, " + COLUMN_COMMENTS + " TEXT, " + COLUMN_FAVOURITE+ " BOOL)";
+        String createTableStatement = "CREATE TABLE " + RECIPE_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " BLOB," + COLUMN_SERVING+ " INT, " + COLUMN_INGREDIENTS + " TEXT, "+ COLUMN_SHORTDESC+ " TEXT, " + COLUMN_STEPS + " TEXT, " + COLUMN_COMMENTS + " TEXT, " + COLUMN_FAVOURITE+ " BOOL)";
 
         db.execSQL(createTableStatement);
     }
@@ -50,6 +50,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addOne(Recipe recipe){
+        Log.d(TAG, "img: " + recipe.getImage().length);
         Gson gson = new Gson();
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -89,13 +90,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // takes a id of recipe, return the recipe item
     public Recipe getOne(int id){
         Log.d(TAG,"Getting one from database, Id: " + id);
+
         String queryString = "SELECT * FROM " + RECIPE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
         int customerID = cursor.getInt(0);
         String name = cursor.getString(1);
-        String image = cursor.getString(2);
+        byte[] image;
+        Log.d(TAG, "blob length" + cursor.getBlob(2).length);
+        if (cursor.getBlob(2).length != 0 ){
+            image = cursor.getBlob(2);
+        } else{
+            image = new byte[0];
+        }
+        Log.d(TAG,"Getting one from database, Image: " + image.length);
         int serving = cursor.getInt(3);
         String ingredients_str = cursor.getString(4);
         String desc = cursor.getString(5);
@@ -127,7 +136,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do{
                 int customerID = cursor.getInt(0);
                 String name = cursor.getString(1);
-                String image = cursor.getString(2);
+                byte[] image = cursor.getBlob(2);
                 int serving = cursor.getInt(3);
                 String ingredients_str = cursor.getString(4);
                 String desc = cursor.getString(5);

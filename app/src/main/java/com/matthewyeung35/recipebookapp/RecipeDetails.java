@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,7 +30,6 @@ public class RecipeDetails extends AppCompatActivity {
     Dialog dialog;
     private DataBaseHelper dataBaseHelper;
     int recipeId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,12 @@ public class RecipeDetails extends AppCompatActivity {
         binding.txtDetailIngredients.setText(ingredients_string);
         binding.txtDetailSteps.setText(recipe.getSteps());
         binding.txtDetailComments.setText(recipe.getComments());
+        //image
+        if (recipe.getImage().length !=0){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+            binding.imgDetail.setImageBitmap(bitmap);
+        }
+
 
         // calculator
         binding.btnDetailCalc.setOnClickListener(new View.OnClickListener() {

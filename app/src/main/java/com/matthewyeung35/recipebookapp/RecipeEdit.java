@@ -1,12 +1,26 @@
 package com.matthewyeung35.recipebookapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.matthewyeung35.recipebookapp.databinding.ActivityRecipeEditBinding;
@@ -14,13 +28,17 @@ import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
+import java.io.ByteArrayOutputStream;
+
 public class RecipeEdit extends AppCompatActivity {
     private ActivityRecipeEditBinding binding;
     private IngredientsArray ingredients;
-    AddIngredientViewAdapter adapter = new AddIngredientViewAdapter(RecipeEdit.this);
-    String TAG = "RecipeEdit";
+    private AddIngredientViewAdapter adapter = new AddIngredientViewAdapter(RecipeEdit.this);
+    private String TAG = "RecipeEdit";
     int recipeId;
-    Recipe old_recipe;
+    private Recipe old_recipe;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +74,12 @@ public class RecipeEdit extends AppCompatActivity {
             for (Ingredient i: old_recipe.getIngredients()){
                 IngredientsArray.getInstance().addIngredient(i);
             }
+            //get image
+            if (old_recipe.getImage().length !=0){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(old_recipe.getImage(), 0, old_recipe.getImage().length);
+                binding.imgPhoto.setImageBitmap(bitmap);
+            }
+
         }
 
         //initialize ingredients rec view
@@ -63,13 +87,50 @@ public class RecipeEdit extends AppCompatActivity {
         binding.ingredientRecylerView.setAdapter(adapter);
         binding.ingredientRecylerView.setLayoutManager(new LinearLayoutManager(RecipeEdit.this));
 
+        //for using camera
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null){
+                 Bundle bundle = result.getData().getExtras();
+                 bitmap = (Bitmap) bundle.get("data");
+                 binding.imgPhoto.setImageBitmap(bitmap);
+                }
+            }
+        });
+
     }
 
     private void btnPhoto() {
         binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Toast.makeText(RecipeEdit.this, "TODO", Toast.LENGTH_SHORT).show();
+                PopupMenu popupMenu = new PopupMenu(RecipeEdit.this, binding.btnAddPhoto);
+                popupMenu.getMenuInflater().inflate(R.menu.camera_popup, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.cameraExisting:
+                                Toast.makeText(RecipeEdit.this, "Existing", Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.cameraPhoto:
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (intent.resolveActivity(getPackageManager())!= null){
+                                    activityResultLauncher.launch(intent);
+                                } else{
+                                    Toast.makeText(RecipeEdit.this, "camera not working", Toast.LENGTH_SHORT).show();
+                                }
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+                popupMenu.show();
             }
         });
     }
@@ -107,6 +168,7 @@ public class RecipeEdit extends AppCompatActivity {
 
     private void btnRecipe() {
         binding.btnAddRecipe.setOnClickListener(new View.OnClickListener() {
+            private byte[] img;
             // on clicking the add recipe button, store all data into the recipe database
             @Override
             public void onClick(View v) {
@@ -119,8 +181,19 @@ public class RecipeEdit extends AppCompatActivity {
                     Log.e(TAG, "no serving input");
                 }
 
-                // TODO Image function
-                String image  = "dummy text";
+                // for adding image, if there is a image then turn it to a byte[], if there is no image then use a empty byte[] instead
+                if (bitmap != null){
+                    Log.d(TAG, "bit map yes");
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    img = bos.toByteArray();
+                    Log.d(TAG, "bit map yes" + img.length);
+                }else{
+                    img = new byte[0];
+                    Log.d(TAG, "bit map null" + img.length);
+                }
+
+                //continue
                 String steps = binding.edtSteps.getText().toString();
                 String comments = binding.edtComments.getText().toString();
 
@@ -147,28 +220,26 @@ public class RecipeEdit extends AppCompatActivity {
                         IngredientsArray.getAllIngredients().remove(i);
                     }
                 }
-
                 Log.d(TAG, "JSON ingredients" + IngredientsArray.getInstance().dataToJson());
-
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeEdit.this);
                 // add new recipe to database
+                Log.d(TAG, "Image bytearray" + img);
                 if (recipeId == -1){
                     // back to main page
                     // clear ingredients for next entry
-                    Recipe recipe = new Recipe(-1, name, image, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    Recipe recipe = new Recipe(-1, name, img, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
                     dataBaseHelper.addOne(recipe);
                     IngredientsArray.getInstance().clearArray();
                     IngredientsArray.getInstance().initData();
                     adapter.notifyDataSetChanged();
 
-                    finish();
                 }else{
-                    Recipe recipe = new Recipe(old_recipe.getId(), name, image, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                    Recipe recipe = new Recipe(old_recipe.getId(), name, img, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
                     // update recipe entry instead of creating a new one if coming from existing recipe
                     dataBaseHelper.updateOne(recipe);
-                    finish();
                 }
+                finish();
             }
         });
     }

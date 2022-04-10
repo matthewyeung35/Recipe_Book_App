@@ -18,7 +18,8 @@
             android:name=".RecipeEdit"
             android:exported="false"
             android:label="@string/recipeEditName"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:configChanges="screenLayout|orientation|screenSize"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,5 +32,8 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
 </manifest>
