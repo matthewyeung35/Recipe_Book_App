@@ -7,12 +7,16 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -47,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         if (recipes.size() == 0){
             //sample data on create
             //for image
-//            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_icon_miko_background);
-//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-//            byte[] img = bos.toByteArray();
-
             byte[] img = new byte[0];
             String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
             ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
@@ -87,12 +86,13 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_favourite, R.id.nav_slideshow, R.id.nav_setting)
+                R.id.nav_home, R.id.nav_favourite, R.id.nav_shopping, R.id.nav_setting, R.id.nav_add)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     //default option menu
@@ -110,5 +110,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onPause() {
+        binding.drawerLayout.closeDrawers();
+        super.onPause();
     }
 }
