@@ -100,14 +100,14 @@ public class RecipeEdit extends AppCompatActivity {
         activityResultLauncherImage = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri result) {
-                        InputStream inputStream = null;
                         try {
-                            inputStream = getContentResolver().openInputStream(result);
+                            InputStream inputStream = getContentResolver().openInputStream(result);
+                            bitmap = (Bitmap) BitmapFactory.decodeStream(inputStream);
+                            binding.imgPhoto.setImageBitmap(bitmap);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-                        bitmap = BitmapFactory.decodeStream(inputStream);
-                        binding.imgPhoto.setImageBitmap(bitmap);
+
                     }
                 });
 
@@ -220,7 +220,7 @@ public class RecipeEdit extends AppCompatActivity {
                 if (bitmap != null){
                     Log.d(TAG, "bit map yes");
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                     img = bos.toByteArray();
                     Log.d(TAG, "bit map yes" + img.length);
                 }else{
@@ -261,21 +261,27 @@ public class RecipeEdit extends AppCompatActivity {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeEdit.this);
                 // add new recipe to database
                 Log.d(TAG, "Image bytearray" + img);
-                if (recipeId == -1){
-                    // back to main page
-                    // clear ingredients for next entry
-                    Recipe recipe = new Recipe(-1, name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
-                    dataBaseHelper.addOne(recipe);
-                    IngredientsArray.getInstance().clearArray();
-                    IngredientsArray.getInstance().initData();
-                    adapter.notifyDataSetChanged();
-
+                // test if the image can fit into db or not, if not then request another image
+                if (img.length > 1000000){
+                    Toast.makeText(RecipeEdit.this, "Image size too big, choose another image", Toast.LENGTH_SHORT).show();
                 }else{
-                    Recipe recipe = new Recipe(old_recipe.getId(), name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
-                    // update recipe entry instead of creating a new one if coming from existing recipe
-                    dataBaseHelper.updateOne(recipe);
+                    if (recipeId == -1){
+                        // back to main page
+                        // clear ingredients for next entry
+                        Recipe recipe = new Recipe(-1, name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                        dataBaseHelper.addOne(recipe);
+                        dataBaseHelper.getDb();
+                        IngredientsArray.getInstance().clearArray();
+                        IngredientsArray.getInstance().initData();
+                        adapter.notifyDataSetChanged();
+
+                    }else{
+                        Recipe recipe = new Recipe(old_recipe.getId(), name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                        // update recipe entry instead of creating a new one if coming from existing recipe
+                        dataBaseHelper.updateOne(recipe);
+                    }
+                    finish();
                 }
-                finish();
             }
         });
     }
