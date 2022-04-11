@@ -147,8 +147,12 @@ public class RecipeDetails extends AppCompatActivity {
         //image
         byte[] decodedString = Base64.decode(recipe.getImage(), Base64.DEFAULT);
         if (decodedString.length !=0){
+            binding.imgDetail.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             binding.imgDetail.setImageBitmap(bitmap);
+        }else{
+            // hide imageview if no image
+            binding.imgDetail.setVisibility(View.GONE);
         }
 
 

@@ -37,4 +37,5 @@
     <string name="edit_recipe">Edit Recipe</string>
     <string name="from_existing_files">From existing files</string>
     <string name="take_a_photo">Take a photo</string>
+    <string name="confirm_delete_photo">Do you want to remove the photo</string>
 </resources>

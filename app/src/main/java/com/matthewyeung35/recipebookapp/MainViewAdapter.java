@@ -58,6 +58,9 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         if (decodedString.length !=0){
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             holder.imgCardPhoto.setImageBitmap(bitmap);
+        }else{
+            // show default image if no image
+            holder.imgCardPhoto.setImageResource(R.mipmap.ic_launcher);
         }
         holder.txtCardName.setText(recipe.getName());
         holder.txtCardDesc.setText(recipe.getShortDesc());

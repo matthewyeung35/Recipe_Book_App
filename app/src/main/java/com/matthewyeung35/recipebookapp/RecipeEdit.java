@@ -10,6 +10,8 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -62,6 +64,7 @@ public class RecipeEdit extends AppCompatActivity {
 
         //initialize buttons
         btnPhoto();
+        btnDeletePhoto();
         addIngredient();
         btnRecipe();
         binding.detailBar.barBack.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +207,31 @@ public class RecipeEdit extends AppCompatActivity {
         });
     }
 
+    private void btnDeletePhoto(){
+        binding.btnPhotoDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeEdit.this);
+                builder.setMessage(RecipeEdit.this.getString(R.string.confirm_delete_photo) + " ?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        bitmap = null;
+                        binding.imgPhoto.setImageResource(R.mipmap.ic_launcher);
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ;
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
+    }
+
     private void addIngredient() {
         binding.btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,5 +360,16 @@ public class RecipeEdit extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    // for delete photo button: show when there is a photo
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bitmap != null){
+            binding.btnPhotoDelete.setVisibility(View.VISIBLE);
+        }else{
+            binding.btnPhotoDelete.setVisibility(View.GONE);
+        }
     }
 }
