@@ -6,14 +6,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -30,8 +33,12 @@ import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -39,7 +46,7 @@ public class RecipeEdit extends AppCompatActivity {
     private ActivityRecipeEditBinding binding;
     private IngredientsArray ingredients;
     private AddIngredientViewAdapter adapter = new AddIngredientViewAdapter(RecipeEdit.this);
-    private String TAG = "RecipeEdit";
+    private String TAG = "RecipeEdit", currentPhotoPath;
     int recipeId;
     private Recipe old_recipe;
     private ActivityResultLauncher<Intent> activityResultLauncherCamera;
@@ -102,70 +109,97 @@ public class RecipeEdit extends AppCompatActivity {
                     public void onActivityResult(Uri result) {
                         try {
                             InputStream inputStream = getContentResolver().openInputStream(result);
-                            bitmap = (Bitmap) BitmapFactory.decodeStream(inputStream);
+                            bitmap = BitmapFactory.decodeStream(inputStream);
                             binding.imgPhoto.setImageBitmap(bitmap);
-                        } catch (FileNotFoundException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
 
-                //for using camera
-                activityResultLauncherCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                            try {
-                                Bundle bundle = result.getData().getExtras();
-                                bitmap = (Bitmap) bundle.get("data");
-                                binding.imgPhoto.setImageBitmap(bitmap);
-                            } catch (Exception e) {
-                                Log.e(TAG, "can't get camera");
-                            }
-                        }
-                    }
-                });
-
-
+        //for using camera
+        activityResultLauncherCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                try {
+                    // get thumbnail method, low res
+//                    Bundle bundle = result.getData().getExtras();
+//                    bitmap = (Bitmap) bundle.get("data");
+                    bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+                    binding.imgPhoto.setImageBitmap(bitmap);
+                    Log.d(TAG, "Camera bitmap" + bitmap);
+                } catch (Exception e) {
+                    Log.e(TAG, "can't get camera result");
+                }
+            }
+        });
     }
 
     private void btnPhoto() {
         binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(RecipeEdit.this, binding.btnAddPhoto);
-                popupMenu.getMenuInflater().inflate(R.menu.camera_popup, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.cameraExisting:
-                                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                                if (EasyPermissions.hasPermissions(RecipeEdit.this, perms)) {
+                // check for permission first
+                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if (EasyPermissions.hasPermissions(RecipeEdit.this, perms)) {
+                    PopupMenu popupMenu = new PopupMenu(RecipeEdit.this, binding.btnAddPhoto);
+                    popupMenu.getMenuInflater().inflate(R.menu.camera_popup, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()){
+                                case R.id.cameraExisting:
                                     activityResultLauncherImage.launch("image/*");
-                                } else {
-                                    // Do not have permissions, request them now
-                                    EasyPermissions.requestPermissions(RecipeEdit.this,"Please grant permission",
-                                            LOCATION_REQUEST, perms);
-                                }
-                                return true;
+                                    return true;
 
-                            case R.id.cameraPhoto:
-                                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (camera_intent.resolveActivity(getPackageManager())!= null){
-                                    activityResultLauncherCamera.launch(camera_intent);
-                                } else{
-                                    Toast.makeText(RecipeEdit.this, "camera not working", Toast.LENGTH_SHORT).show();
-                                }
-                                return true;
-                            default:
-                                return false;
+                                case R.id.cameraPhoto:
+                                    // get thumbnail method, low res
+//                                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                if (camera_intent.resolveActivity(getPackageManager())!= null){
+//                                    activityResultLauncherCamera.launch(camera_intent);
+//                                } else{
+//                                    Toast.makeText(RecipeEdit.this, "camera not working", Toast.LENGTH_SHORT).show();
+//                             }
+
+                                    Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                    if (camera_intent.resolveActivity(getPackageManager())!= null) {
+                                        File photoFile = createImageFile();
+                                        Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),"com.matthewyeung35.recipebookapp.fileprovider", photoFile);
+                                        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                                        Log.d(TAG, "PhotoUri " + String.valueOf(photoUri));
+                                        activityResultLauncherCamera.launch(camera_intent);
+                                    } else {
+                                        Toast.makeText(getBaseContext(), "Camera is not available", Toast.LENGTH_LONG).show();
+                                    }
+                                    return true;
+                                default:
+                                    return false;
+                            }
                         }
-                    }
-                });
+                    });
+                    popupMenu.show();
 
-                popupMenu.show();
+                } else {
+                    // Do not have permissions, request them now
+                    EasyPermissions.requestPermissions(RecipeEdit.this,"Please grant permission",
+                            LOCATION_REQUEST, perms);
+                }
+
+            }
+
+            private File createImageFile() {
+                String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "IMAGE_" + timeStamp + "_";
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File image = null;
+                try {
+                    image = File.createTempFile(imageFileName, ".jpg", storageDir);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                currentPhotoPath = image.getAbsolutePath();
+                Log.d(TAG, "currentPhotoPath " + currentPhotoPath);
+                return image;
             }
         });
     }
@@ -218,7 +252,6 @@ public class RecipeEdit extends AppCompatActivity {
 
                 // for adding image, if there is a image then turn it to a byte[], if there is no image then use a empty byte[] instead
                 if (bitmap != null){
-                    Log.d(TAG, "bit map yes");
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                     img = bos.toByteArray();
