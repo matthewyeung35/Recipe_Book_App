@@ -4,17 +4,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -23,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import android.content.Context;
+import android.content.ContentResolver;
 
 import com.matthewyeung35.recipebookapp.databinding.ActivityRecipeEditBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
@@ -30,6 +30,10 @@ import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class RecipeEdit extends AppCompatActivity {
     private ActivityRecipeEditBinding binding;
@@ -38,8 +42,10 @@ public class RecipeEdit extends AppCompatActivity {
     private String TAG = "RecipeEdit";
     int recipeId;
     private Recipe old_recipe;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncherCamera;
+    private ActivityResultLauncher<String> activityResultLauncherImage;
     private Bitmap bitmap;
+    private static final int LOCATION_REQUEST = 222;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,23 +96,42 @@ public class RecipeEdit extends AppCompatActivity {
         binding.ingredientRecylerView.setAdapter(adapter);
         binding.ingredientRecylerView.setLayoutManager(new LinearLayoutManager(RecipeEdit.this));
 
-        //for using camera
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null){
-                 Bundle bundle = result.getData().getExtras();
-                 bitmap = (Bitmap) bundle.get("data");
-                 binding.imgPhoto.setImageBitmap(bitmap);
-                }
-            }
-        });
+        //for accessing image
+        activityResultLauncherImage = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri result) {
+                        InputStream inputStream = null;
+                        try {
+                            inputStream = getContentResolver().openInputStream(result);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        bitmap = BitmapFactory.decodeStream(inputStream);
+                        binding.imgPhoto.setImageBitmap(bitmap);
+                    }
+                });
+
+                //for using camera
+                activityResultLauncherCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            try {
+                                Bundle bundle = result.getData().getExtras();
+                                bitmap = (Bitmap) bundle.get("data");
+                                binding.imgPhoto.setImageBitmap(bitmap);
+                            } catch (Exception e) {
+                                Log.e(TAG, "can't get camera");
+                            }
+                        }
+                    }
+                });
+
 
     }
 
     private void btnPhoto() {
         binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(RecipeEdit.this, binding.btnAddPhoto);
@@ -116,13 +141,20 @@ public class RecipeEdit extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.cameraExisting:
-                                Toast.makeText(RecipeEdit.this, "Existing", Toast.LENGTH_SHORT).show();
+                                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                                if (EasyPermissions.hasPermissions(RecipeEdit.this, perms)) {
+                                    activityResultLauncherImage.launch("image/*");
+                                } else {
+                                    // Do not have permissions, request them now
+                                    EasyPermissions.requestPermissions(RecipeEdit.this,"Please grant permission",
+                                            LOCATION_REQUEST, perms);
+                                }
                                 return true;
 
                             case R.id.cameraPhoto:
-                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (intent.resolveActivity(getPackageManager())!= null){
-                                    activityResultLauncher.launch(intent);
+                                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (camera_intent.resolveActivity(getPackageManager())!= null){
+                                    activityResultLauncherCamera.launch(camera_intent);
                                 } else{
                                     Toast.makeText(RecipeEdit.this, "camera not working", Toast.LENGTH_SHORT).show();
                                 }
@@ -256,7 +288,10 @@ public class RecipeEdit extends AppCompatActivity {
         IngredientsArray.getInstance().initData();
     }
 
-
-
-
+    //ask for accessing image perms
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 }
