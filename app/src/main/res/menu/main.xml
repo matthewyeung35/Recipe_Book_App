@@ -8,4 +8,10 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_search"
         app:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/nav_add_shopping"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_plus"
+        android:iconTint="@color/white"/>
 </menu>

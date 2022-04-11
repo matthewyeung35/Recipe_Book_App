@@ -3,6 +3,7 @@ package com.matthewyeung35.recipebookapp.ui.setting;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.matthewyeung35.recipebookapp.R;
 import com.matthewyeung35.recipebookapp.databinding.FragmentSettingBinding;
 
@@ -29,10 +31,16 @@ public class SettingFragment extends Fragment {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSetting;
-        settingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
+        // search bar
         setHasOptionsMenu(true);
+
+
+
+//        // hide fab button
+//        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+//        fab.setVisibility(View.GONE);
+
+        binding.textSetting.setText("Setting");
         return root;
     }
 
@@ -44,10 +52,15 @@ public class SettingFragment extends Fragment {
 
     // for hiding search bar
     @Override
-    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        MenuItem item = menu.findItem(R.id.nav_search);
-        if(item!=null)
-            item.setVisible(false);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem search_item = menu.findItem(R.id.nav_search);
+        if(search_item!=null){
+            search_item.setVisible(false);
+        }
+        MenuItem add_item = menu.findItem(R.id.nav_add_shopping);
+        if(add_item!=null){
+            add_item.setVisible(false);
+        }
     }
 }

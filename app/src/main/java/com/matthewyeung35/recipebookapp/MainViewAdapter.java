@@ -148,7 +148,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         private TextView txtCardName, txtCardDesc;
         private CardView parent;
         private ImageView btnDeleteRecipe, btnCardFavourite;
-        private SearchView searchView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

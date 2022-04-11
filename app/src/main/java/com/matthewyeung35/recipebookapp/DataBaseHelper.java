@@ -74,15 +74,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean deleteOne(Recipe recipe){
         //try to find customerModel in database, and delete it and return true. If can't find, return false
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + RECIPE_TABLE + " WHERE " + COLUMN_ID + " = " + recipe.getId();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-        if (cursor.moveToFirst()){
+        try{
+            String queryString = "DELETE FROM " + RECIPE_TABLE + " WHERE " + COLUMN_ID + " = " + recipe.getId();
+            db.execSQL(queryString);
             return true;
-        }else{
+        }catch (Exception e){
             return false;
         }
-
     }
 
 
@@ -152,7 +150,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         // return a array of CustomerModel
         return resultArray;
-
     }
 
     // swap the condition of favourite on call. Takes a Recipe, will find corresponding data with id

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.matthewyeung35.recipebookapp.DataBaseHelper;
 import com.matthewyeung35.recipebookapp.MainViewAdapter;
 import com.matthewyeung35.recipebookapp.R;
@@ -65,6 +66,10 @@ public class FavouriteFragment extends Fragment {
             binding.txtNoRecipe.setVisibility(View.GONE);
         }
 
+        // show fab button
+//        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+//        fab.setVisibility(View.VISIBLE);
+
         return root;
     }
 
@@ -111,7 +116,15 @@ public class FavouriteFragment extends Fragment {
             }
         });
 
+        // hide + button on action bar
+        MenuItem add_item = menu.findItem(R.id.nav_add_shopping);
+        if(add_item!=null){
+            add_item.setVisible(false);
+        }
+
     }
+
+
 
     //clear focus of search bar when switching activities
     @Override
@@ -142,4 +155,6 @@ public class FavouriteFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

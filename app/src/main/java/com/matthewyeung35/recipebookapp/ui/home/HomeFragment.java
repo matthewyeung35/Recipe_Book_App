@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.matthewyeung35.recipebookapp.DataBaseHelper;
 import com.matthewyeung35.recipebookapp.MainViewAdapter;
 import com.matthewyeung35.recipebookapp.R;
@@ -105,6 +106,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // hide + button on action bar
+        MenuItem add_item = menu.findItem(R.id.nav_add_shopping);
+        if(add_item!=null){
+            add_item.setVisible(false);
+        }
     }
 
     //clear focus of search bar when switching activities
@@ -120,8 +126,11 @@ public class HomeFragment extends Fragment {
         try {
             searchView.clearFocus();
         }catch (Exception e){
-
         }
+
+        // show fab button
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -129,4 +138,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }
