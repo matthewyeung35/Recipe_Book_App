@@ -2,6 +2,8 @@ package com.matthewyeung35.recipebookapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -13,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.matthewyeung35.recipebookapp.databinding.ActivityRecipeDetailsBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
+import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import java.util.ArrayList;
@@ -31,6 +35,7 @@ public class RecipeDetails extends AppCompatActivity {
     Dialog dialog;
     private DataBaseHelper dataBaseHelper;
     int recipeId;
+    private String TAG = "RecipeDetails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,11 +173,11 @@ public class RecipeDetails extends AppCompatActivity {
         binding.btnDetailCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RecipeDetails.this, "TODO", Toast.LENGTH_SHORT).show();
+                shoppingOnClick();
             }
+
+
         });
-
-
     }
 
     private void calculatorOnClick() {
@@ -216,6 +221,57 @@ public class RecipeDetails extends AppCompatActivity {
                 recipe.setIngredients(new_ingredients);
                 dialog.dismiss();
                 initView();
+            }
+        });
+        dialog.show();
+    }
+
+    private void shoppingOnClick() {
+        // set up ingredients array global var
+        IngredientsArray ingredients = null;
+        ingredients.getInstance().clearArray();
+
+        // set up dialog box on click
+        dialog.setContentView(R.layout.activity_pop_shopping);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // set up recview with ingredients list
+        RecyclerView shoppingAddRec = dialog.findViewById(R.id.ingredientShoppingRec);
+        ShopAddAdapter adapter = new ShopAddAdapter(RecipeDetails.this);
+        shoppingAddRec.setAdapter(adapter);
+        shoppingAddRec.setLayoutManager(new LinearLayoutManager(RecipeDetails.this));
+        adapter.setIngredients(recipe.getIngredients());
+
+        // confirm add button, add selected ingredients to shopping list db
+        Button btnAddToShopping = dialog.findViewById(R.id.btnAddToShopping);
+        btnAddToShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int new_shopping_item = 0;
+                // get the listed of checked item from ShopAddAdapter
+                for (Ingredient i: ingredients.getInstance().getAll()){
+                    Log.d(TAG, "i " + i.getFood());
+                    ShoppingDb shoppingDb = new ShoppingDb(RecipeDetails.this);
+                    ArrayList<String> old_shopping_list = shoppingDb.getDb();
+                    Boolean already_exist = false;
+                    // compare current food item with existing shopping database, if not in there, add it
+                    for (String food: old_shopping_list){
+                        if (food.equals(i.getFood())){
+                            already_exist = true;
+                        }
+                    }
+                    if (already_exist == false){
+                        shoppingDb.addOne(i.getFood());
+                        new_shopping_item += 1;
+                    }
+                }
+                // return a toast depends if there is anything added
+                if (new_shopping_item > 0){
+                    Toast.makeText(RecipeDetails.this, "Added " + new_shopping_item + " items into the shopping cart", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(RecipeDetails.this, "No items were added", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
             }
         });
         dialog.show();

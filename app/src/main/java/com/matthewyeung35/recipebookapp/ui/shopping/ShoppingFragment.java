@@ -1,5 +1,6 @@
 package com.matthewyeung35.recipebookapp.ui.shopping;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,12 +122,29 @@ public class ShoppingFragment extends Fragment {
         btnAddShopping.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Add to shopping cart");
-                builder.setMessage("  ");
+                // auto focus and get keyboard on open menu
                 EditText input = new EditText(getContext());
-                builder.setView(input);
-                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                InputMethodManager inputMethodManager= (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                inputMethodManager.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+                            }
+                        };
+                        input.post(runnable);
+                        input.postDelayed(runnable,200);
+                    }
+                });
+                input.requestFocus();
+                // for the alert dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Add to shopping cart")
+                .setMessage("  ")
+                .setView(input)
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String input_food = input.getText().toString();
@@ -139,13 +158,13 @@ public class ShoppingFragment extends Fragment {
                         if (already_exist == false){
                             shoppingDb.addOne(input_food);
                             food_array.add(input_food);
+                            adapter.notifyDataSetChanged();
                         }else{
                             Toast.makeText(getContext(), "Ingredient already exist", Toast.LENGTH_SHORT).show();
                         }
-
                     }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ;

@@ -49,8 +49,22 @@ public class IngredientsArray {
         return gson.toJson(allIngredients);
     }
 
+    public ArrayList<Ingredient> getAll(){
+        return allIngredients;
+    }
+
     public void clearArray(){
         allIngredients.removeAll(allIngredients);
-
     }
+
+    public String toString(){
+        String result = "";
+        for (Ingredient i: allIngredients) {
+            result += i.toString();
+            result += " ";
+        }
+        return result;
+        }
+
+
 }

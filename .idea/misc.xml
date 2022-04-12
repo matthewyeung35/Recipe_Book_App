@@ -32,6 +32,7 @@
         <entry key="..\:/programming/recipe book app/app/src/main/res/drawable/side_nav_bar.xml" value="0.4275" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/activity_main.xml" value="0.35213675213675216" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/activity_pop_calculator.xml" value="0.25769230769230766" />
+        <entry key="..\:/programming/recipe book app/app/src/main/res/layout/activity_pop_shopping.xml" value="0.4551282051282051" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/activity_recipe_details.xml" value="0.3333333333333333" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/activity_recipe_edit.xml" value="0.35213675213675216" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/add_ingredient_recycler.xml" value="0.35213675213675216" />
@@ -46,6 +47,7 @@
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/fragment_slideshow.xml" value="0.35213675213675216" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/main_recycler.xml" value="0.4466666666666667" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/nav_header_main.xml" value="0.35213675213675216" />
+        <entry key="..\:/programming/recipe book app/app/src/main/res/layout/shop_add_recycler.xml" value="0.4551282051282051" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/layout/shopping_recycler.xml" value="0.35213675213675216" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/menu/activity_main_drawer.xml" value="0.35213675213675216" />
         <entry key="..\:/programming/recipe book app/app/src/main/res/menu/camera_popup.xml" value="0.4551282051282051" />
