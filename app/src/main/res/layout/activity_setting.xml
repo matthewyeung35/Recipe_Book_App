@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.TestingFragment"
-    android:padding="15dp">
+    tools:context=".ui.setting.TestingFragment">
+
+    <include
+        android:id="@+id/detailBar"
+        layout="@layout/setting_actionbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/detailBar"
+        android:padding="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,12 +48,12 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/exportLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/setDarkModeLayout"
-            android:layout_marginTop="20dp">
+            <RelativeLayout
+                android:id="@+id/exportLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/setDarkModeLayout"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/txtExport"
@@ -64,13 +69,15 @@
                     android:text="@string/export_desc"
                     android:textSize="16dp"
                     android:layout_below="@+id/txtExport"/>
+
                 <Button
+                    android:id="@+id/btnExport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Export as json"
                     android:layout_below="@+id/txtExportDesc"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:text="Export as json" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -95,13 +102,15 @@
                     android:layout_below="@+id/txtImport"
                     android:text="@string/import_desc"
                     android:textSize="16dp" />
+
                 <Button
+                    android:id="@+id/btnImport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Import a json"
                     android:layout_below="@+id/txtImportDesc"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:text="Import a json" />
             </RelativeLayout>
 
 

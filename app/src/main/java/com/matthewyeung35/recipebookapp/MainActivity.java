@@ -2,21 +2,18 @@ package com.matthewyeung35.recipebookapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,11 +21,11 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.matthewyeung35.recipebookapp.database.DataBaseHelper;
 import com.matthewyeung35.recipebookapp.databinding.ActivityMainBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private DataBaseHelper dataBaseHelper;
+    private final static String TAG = "MainActivity";
 
-    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        themeSetter();
+
         super.onCreate(savedInstanceState);
+
         //TODO Create a initial splash screen
 
         //initialize database on create
@@ -63,6 +63,18 @@ public class MainActivity extends AppCompatActivity {
         initView();
 
     }
+
+    private void themeSetter() {
+        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCE, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME,UserSettings.LIGHT_THEME);
+        Log.d(TAG, "Preference " + theme);
+        if (theme.equals(UserSettings.LIGHT_THEME)){
+            AppCompatDelegate. setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else{
+            AppCompatDelegate. setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+    }
+
 
     private void initView() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 
     @Override
     protected void onPause() {

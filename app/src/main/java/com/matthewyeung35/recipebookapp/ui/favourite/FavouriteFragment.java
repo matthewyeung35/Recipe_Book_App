@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,9 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.matthewyeung35.recipebookapp.DataBaseHelper;
-import com.matthewyeung35.recipebookapp.MainViewAdapter;
+import com.matthewyeung35.recipebookapp.database.DataBaseHelper;
+import com.matthewyeung35.recipebookapp.RecyclerAdapters.MainViewAdapter;
 import com.matthewyeung35.recipebookapp.R;
 import com.matthewyeung35.recipebookapp.databinding.FragmentHomeBinding;
 import com.matthewyeung35.recipebookapp.objects.Recipe;

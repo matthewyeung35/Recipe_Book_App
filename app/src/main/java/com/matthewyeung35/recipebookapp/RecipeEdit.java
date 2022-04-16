@@ -13,7 +13,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -26,9 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-import android.content.Context;
-import android.content.ContentResolver;
 
+import com.matthewyeung35.recipebookapp.RecyclerAdapters.AddIngredientViewAdapter;
+import com.matthewyeung35.recipebookapp.database.DataBaseHelper;
 import com.matthewyeung35.recipebookapp.databinding.ActivityRecipeEditBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
@@ -36,7 +35,6 @@ import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;

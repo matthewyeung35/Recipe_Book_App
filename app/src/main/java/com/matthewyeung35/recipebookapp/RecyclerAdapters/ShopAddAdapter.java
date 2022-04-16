@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.RecyclerAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.matthewyeung35.recipebookapp.R;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
 

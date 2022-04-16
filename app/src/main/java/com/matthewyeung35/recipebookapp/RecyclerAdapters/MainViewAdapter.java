@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.RecyclerAdapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,9 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.matthewyeung35.recipebookapp.database.DataBaseHelper;
+import com.matthewyeung35.recipebookapp.R;
+import com.matthewyeung35.recipebookapp.RecipeDetails;
 import com.matthewyeung35.recipebookapp.objects.Recipe;
 
 import java.util.ArrayList;

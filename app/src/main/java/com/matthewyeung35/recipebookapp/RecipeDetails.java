@@ -2,6 +2,7 @@ package com.matthewyeung35.recipebookapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.matthewyeung35.recipebookapp.RecyclerAdapters.ShopAddAdapter;
+import com.matthewyeung35.recipebookapp.database.DataBaseHelper;
+import com.matthewyeung35.recipebookapp.database.ShoppingDb;
 import com.matthewyeung35.recipebookapp.databinding.ActivityRecipeDetailsBinding;
 import com.matthewyeung35.recipebookapp.objects.Ingredient;
 import com.matthewyeung35.recipebookapp.objects.IngredientsArray;
@@ -53,6 +57,7 @@ public class RecipeDetails extends AppCompatActivity {
             }
         }
     }
+
 
     // setting button for header bar
 

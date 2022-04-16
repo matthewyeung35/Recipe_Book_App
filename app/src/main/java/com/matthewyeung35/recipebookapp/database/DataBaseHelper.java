@@ -1,4 +1,4 @@
-package com.matthewyeung35.recipebookapp;
+package com.matthewyeung35.recipebookapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
