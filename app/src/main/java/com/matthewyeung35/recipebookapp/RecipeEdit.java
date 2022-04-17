@@ -13,6 +13,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -53,6 +54,7 @@ public class RecipeEdit extends AppCompatActivity {
     private ActivityResultLauncher<String> activityResultLauncherImage;
     private Bitmap bitmap;
     private static final int LOCATION_REQUEST = 222;
+    private boolean favourite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class RecipeEdit extends AppCompatActivity {
         btnDeletePhoto();
         addIngredient();
         btnRecipe();
+        btnFavourite();
         binding.detailBar.barBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +100,16 @@ public class RecipeEdit extends AppCompatActivity {
             }
             Log.d(TAG, "decode" + old_recipe.getImage() + "length "+ old_recipe.getImage().length());
 
+            //favourite button
+            if (old_recipe.isFavourite()){
+                binding.btnFavourite.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+                binding.btnFavourite.setImageDrawable(getDrawable(R.drawable.ic_heart));
+                favourite = true;
+            }else{
+                binding.btnFavourite.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.black)));
+                binding.btnFavourite.setImageDrawable(getDrawable(R.drawable.ic_heart_border));
+                favourite = false;
+            }
         }
 
         //initialize ingredients rec view
@@ -131,6 +144,24 @@ public class RecipeEdit extends AppCompatActivity {
                     Log.d(TAG, "Camera bitmap" + bitmap);
                 } catch (Exception e) {
                     Log.e(TAG, "can't get camera result");
+                }
+            }
+        });
+    }
+
+    // for favourite button
+    private void btnFavourite() {
+        binding.btnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (favourite){
+                    binding.btnFavourite.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.black)));
+                    binding.btnFavourite.setImageDrawable(getDrawable(R.drawable.ic_heart_border));
+                    favourite = false;
+                }else{
+                    binding.btnFavourite.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+                    binding.btnFavourite.setImageDrawable(getDrawable(R.drawable.ic_heart));
+                    favourite = true;
                 }
             }
         });
@@ -317,6 +348,7 @@ public class RecipeEdit extends AppCompatActivity {
                 }
                 Log.d(TAG, "JSON ingredients" + IngredientsArray.getInstance().dataToJson());
 
+
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeEdit.this);
                 // add new recipe to database
                 Log.d(TAG, "Image bytearray" + img);
@@ -327,7 +359,7 @@ public class RecipeEdit extends AppCompatActivity {
                     if (recipeId == -1){
                         // back to main page
                         // clear ingredients for next entry
-                        Recipe recipe = new Recipe(-1, name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                        Recipe recipe = new Recipe(-1, name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,favourite);
                         dataBaseHelper.addOne(recipe);
                         dataBaseHelper.getDb();
                         IngredientsArray.getInstance().clearArray();
@@ -335,7 +367,7 @@ public class RecipeEdit extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
 
                     }else{
-                        Recipe recipe = new Recipe(old_recipe.getId(), name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,false);
+                        Recipe recipe = new Recipe(old_recipe.getId(), name, encodedImage, serving, IngredientsArray.getAllIngredients(),desc,steps,comments,favourite);
                         // update recipe entry instead of creating a new one if coming from existing recipe
                         dataBaseHelper.updateOne(recipe);
                     }

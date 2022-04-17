@@ -8,15 +8,17 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/txtPop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
             android:text="Change servings: \n (Will change the amount of ingredients accordingly)"
             android:textSize="18dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:textColor="@color/darkgray"/>
 
         <RelativeLayout
             android:id="@+id/popRel"

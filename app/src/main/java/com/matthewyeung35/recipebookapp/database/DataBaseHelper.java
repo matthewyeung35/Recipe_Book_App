@@ -168,6 +168,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean updateOne(Recipe recipe){
         Gson gson = new Gson();
         SQLiteDatabase db = this.getWritableDatabase();
+        int favourite;
+        if (recipe.isFavourite()){
+            favourite = 1;
+        }else{
+            favourite = 0;
+        }
         String queryString =
                 "UPDATE " + RECIPE_TABLE + " SET "
                         + COLUMN_NAME + " = '" + recipe.getName() + "',"
@@ -177,7 +183,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         + COLUMN_SHORTDESC + " = '" + recipe.getShortDesc() + "',"
                         + COLUMN_STEPS + " = '" + recipe.getSteps() + "',"
                         + COLUMN_COMMENTS + " = '" + recipe.getComments() + "',"
-                        + COLUMN_FAVOURITE + " = '" + recipe.isFavourite() + "'"
+                        + COLUMN_FAVOURITE + " = '" + favourite + "'"
                         + " WHERE " + COLUMN_ID + " = " + recipe.getId();
 
 

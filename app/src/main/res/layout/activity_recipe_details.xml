@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Recipe name"
+                    android:textColor="@color/darkgray"
                     android:textSize="36dp" />
 
                 <TextView
@@ -50,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtDetailName"
                     android:minHeight="150dp"
-                    android:text="Short Desc" />
+                    android:text="Short Desc"
+                    android:textColor="@color/darkgray" />
 
             </RelativeLayout>
 
@@ -109,7 +111,8 @@
                     android:id="@+id/txtDetailServe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/servings" />
+                    android:text="@string/servings"
+                    android:textColor="@color/darkgray"/>
 
                 <TextView
                     android:id="@+id/txtDetailServing"
@@ -117,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/txtDetailServe"
-                    android:text="1" />
+                    android:text="-1"
+                    android:textColor="@color/darkgray"/>
 
                 <TextView
                     android:id="@+id/txtDetailIngred"
@@ -125,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtDetailServe"
                     android:layout_marginTop="5dp"
-                    android:text="@string/ingredients" />
+                    android:text="@string/ingredients"
+                    android:textColor="@color/darkgray"/>
 
                 <TextView
                     android:id="@+id/txtDetailIngredients"
@@ -133,7 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtDetailIngred"
                     android:minHeight="300dp"
-                    android:text="Show All ingredients" />
+                    android:text="Show All ingredients"
+                    android:textColor="@color/darkgray" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -149,7 +155,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="400dp"
-                    android:text="Steps" />
+                    android:text="Steps"
+                    android:textColor="@color/darkgray" />
 
             </RelativeLayout>
 
@@ -166,7 +173,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="300dp"
-                    android:text="Comments" />
+                    android:text="Comments"
+                    android:textColor="@color/darkgray"
+                    />
 
             </RelativeLayout>
         </RelativeLayout>

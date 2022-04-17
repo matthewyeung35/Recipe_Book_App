@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
     @Override
     protected void onPause() {
         binding.drawerLayout.closeDrawers();

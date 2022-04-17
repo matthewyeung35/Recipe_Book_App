@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/detailBar"
-        layout="@layout/setting_actionbar"/>
+        layout="@layout/setting_actionbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,15 +30,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Enable dark mode"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/maintext"
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/txtSetDarkModeDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtSetDarkMode"
                     android:text="Light mode"
-                    android:textSize="16dp"
-                    android:layout_below="@+id/txtSetDarkMode"/>
+                    android:textColor="@color/secondarytext"
+                    android:textSize="16dp" />
 
                 <Switch
                     android:id="@+id/settingDarkMode"
@@ -48,27 +50,36 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/setDarkModeLayout"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray" />
+
             <RelativeLayout
                 android:id="@+id/exportLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/setDarkModeLayout"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="30dp">
 
                 <TextView
                     android:id="@+id/txtExport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Export as text file"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/maintext"
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/txtExportDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtExport"
                     android:text="@string/export_desc"
-                    android:textSize="16dp"
-                    android:layout_below="@+id/txtExport"/>
+                    android:textColor="@color/secondarytext"
+                    android:textSize="16dp" />
 
                 <Button
                     android:id="@+id/btnExport"
@@ -77,23 +88,31 @@
                     android:layout_below="@+id/txtExportDesc"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Export as json" />
+                    android:text="Export as txt"
+                    android:backgroundTint="@color/secondary"/>
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/exportLayout"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray" />
 
             <RelativeLayout
                 android:id="@+id/importLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/exportLayout"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="30dp">
 
                 <TextView
                     android:id="@+id/txtImport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Import a text file"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/maintext"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/txtImportDesc"
@@ -101,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtImport"
                     android:text="@string/import_desc"
+                    android:textColor="@color/secondarytext"
                     android:textSize="16dp" />
 
                 <Button
@@ -110,16 +130,12 @@
                     android:layout_below="@+id/txtImportDesc"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Import a json" />
+                    android:text="Import a txt"
+                    android:backgroundTint="@color/secondary"/>
             </RelativeLayout>
 
 
-
-
-
         </RelativeLayout>
-
-
 
     </ScrollView>
 </RelativeLayout>

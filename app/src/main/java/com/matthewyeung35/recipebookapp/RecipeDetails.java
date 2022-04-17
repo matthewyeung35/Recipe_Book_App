@@ -165,6 +165,16 @@ public class RecipeDetails extends AppCompatActivity {
             binding.imgDetail.setVisibility(View.GONE);
         }
 
+        // image zoom in on click
+        binding.imgDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecipeDetails.this, GalleryActivity.class);
+                intent.putExtra("recipeId", recipe.getId());
+                RecipeDetails.this.startActivity(intent);
+            }
+        });
+
 
         // calculator
         binding.btnDetailCalc.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +184,7 @@ public class RecipeDetails extends AppCompatActivity {
             }
         });
 
-        // TODO shopping on click
+        // shopping on click
         binding.btnDetailCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,5 +299,6 @@ public class RecipeDetails extends AppCompatActivity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(RecipeDetails.this);
         recipe = dataBaseHelper.getOne(recipeId);
         initView();
+        initBar();
     }
 }

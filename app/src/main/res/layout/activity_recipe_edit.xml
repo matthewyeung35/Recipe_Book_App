@@ -19,15 +19,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/editshape"
-                android:hint="@string/recipe_name" />
+                android:hint="@string/recipe_name"
+                android:textColor="@color/edittext"
+                />
 
             <EditText
                 android:id="@+id/edtDesc"
@@ -36,12 +37,13 @@
                 android:layout_below="@+id/edtName"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
-                android:hint="@string/description" />
+                android:hint="@string/description"
+                android:textColor="@color/edittext"/>
 
 
             <ImageView
                 android:id="@+id/imgPhoto"
-                android:layout_width="250dp"
+                android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_below="@+id/edtDesc"
                 android:layout_marginTop="10dp"
@@ -51,22 +53,47 @@
                 android:id="@+id/btnPhotoDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_redcross"
-                android:layout_toRightOf="@id/imgPhoto"
                 android:layout_below="@+id/edtDesc"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"/>
+                android:layout_toRightOf="@id/imgPhoto"
+                android:src="@drawable/ic_redcross"
+                android:visibility="gone" />
 
-            <Button
-                android:id="@+id/btnAddPhoto"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edtDesc"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="80dp"
-                android:layout_alignParentEnd="true"
-                android:text="@string/add_photo"
-                android:textAllCaps="false" />
+                android:layout_below="@+id/edtDesc"
+                android:layout_toRightOf="@+id/imgPhoto">
+
+                <Button
+                    android:id="@+id/btnAddPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/add_photo"
+                    android:textAllCaps="false" />
+
+                <ImageView
+                    android:id="@+id/btnFavourite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/btnAddPhoto"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_heart_border"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnFavourite"
+                    android:layout_centerHorizontal="true"
+                    android:text="Add to favourite" />
+
+            </RelativeLayout>
+
 
             <EditText
                 android:id="@+id/edtServing"
@@ -76,7 +103,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
                 android:hint="@string/serving"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/edittext" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -90,13 +118,14 @@
 
             <Button
                 android:id="@+id/btnAddIngredient"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ingredientRecylerView"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/secondary"
                 android:text="Add more ingredients"
-                android:textAllCaps="false"
-                android:layout_marginTop="10dp"/>
+                android:textAllCaps="false" />
 
 
             <EditText
@@ -106,7 +135,8 @@
                 android:layout_below="@+id/btnAddIngredient"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
-                android:hint="@string/cooking_steps" />
+                android:hint="@string/cooking_steps"
+                android:textColor="@color/edittext"/>
 
             <EditText
                 android:id="@+id/edtComments"
@@ -115,11 +145,12 @@
                 android:layout_below="@+id/edtSteps"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editshape"
-                android:hint="@string/extra_comments" />
+                android:hint="@string/extra_comments"
+                android:textColor="@color/edittext"/>
 
             <Button
                 android:id="@+id/btnAddRecipe"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edtComments"
                 android:layout_centerHorizontal="true"
@@ -127,6 +158,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/secondary"
                 android:text="@string/add_recipe"
                 android:textAllCaps="false" />
 

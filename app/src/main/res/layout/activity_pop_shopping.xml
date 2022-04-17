@@ -18,7 +18,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="Choose ingredients to add into your shopping cart"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textColor="@color/darkgray"/>
 
         <ScrollView
             android:layout_width="wrap_content"

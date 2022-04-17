@@ -17,7 +17,8 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/editshape"
             android:hint="@string/amount"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:textColor="@color/edittext"/>
 
         <EditText
             android:id="@+id/edtIngredient"
@@ -27,7 +28,8 @@
             android:layout_marginTop="10dp"
             android:layout_weight="0.6"
             android:background="@drawable/editshape"
-            android:hint="@string/ingredient" />
+            android:hint="@string/ingredient"
+            android:textColor="@color/edittext"/>
 
         <ImageView
             android:id="@+id/btnDeleteIngredient"

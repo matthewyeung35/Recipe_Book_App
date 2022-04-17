@@ -55,33 +55,52 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         // dark mode button
+        darkMode();
+
+        // export txt
+        exportTxt();
+
+        // import txt
+        importTxt();
+
+    }
+
+    // button to switch between dark and light mode
+    private void darkMode() {
         // set initial button value
         SharedPreferences sharedPreferences = this.getSharedPreferences(UserSettings.PREFERENCE, Context.MODE_PRIVATE);
         String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME,UserSettings.LIGHT_THEME);
         if (theme.equals(UserSettings.LIGHT_THEME)){
             binding.settingDarkMode.setChecked(false);
+            binding.txtSetDarkModeDesc.setText("Light theme");
         }else{
             binding.settingDarkMode.setChecked(true);
+            binding.txtSetDarkModeDesc.setText("Dark theme");
         }
         // on click listener for dark mode button
         binding.settingDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
+                    //dark
                     SharedPreferences.Editor editor = SettingActivity.this.getSharedPreferences(UserSettings.PREFERENCE, Context.MODE_PRIVATE).edit();
                     editor.putString(UserSettings.CUSTOM_THEME, UserSettings.DARK_THEME);
                     editor.apply();
-
+                    binding.txtSetDarkModeDesc.setText("Dark theme");
                 }else{
+                    //light
                     SharedPreferences.Editor editor = SettingActivity.this.getSharedPreferences(UserSettings.PREFERENCE, Context.MODE_PRIVATE).edit();
                     editor.putString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
                     editor.apply();
+                    binding.txtSetDarkModeDesc.setText("Light theme");
                 }
                 themeSetter();
             }
         });
+    }
 
-        // export txt
+    // export all database recipes into a txt file of json
+    private void exportTxt() {
         binding.btnExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,8 +122,11 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        // import txt
+
+    // takes a txt file of json recipes and add them into the database
+    private void importTxt() {
         binding.btnImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,8 +163,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private void themeSetter() {
