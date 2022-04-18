@@ -1,0 +1,111 @@
+<resources>
+
+    <string name="app_name">簡單食譜</string>
+
+    <string name="navigation_drawer_open">打開導航抽屜</string>
+
+    <string name="navigation_drawer_close">關閉導航抽屜</string>
+
+    <string name="nav_header_title">簡單食譜</string>
+
+    <string name="nav_header_subtitle">您的個人食譜書</string>
+
+    <string name="nav_header_desc">導航標題</string>
+
+    <string name="action_settings">設置</string>
+
+    <string name="menu_home">我的食譜</string>
+
+    <string name="menu_gallery">畫廊</string>
+
+    <string name="menu_shopping">購物清單</string>
+
+    <string name="menu_setting">環境</string>
+
+    <string name="hello_blank_fragment">你好空白片段</string>
+
+    <string name="menu_favourite">最喜歡的</string>
+
+    <string name="recipeEditName">食譜編輯器</string>
+
+    <string name="extra_comments">額外評論</string>
+
+    <string name="add_recipe">添加食譜</string>
+
+    <string name="cooking_steps">烹飪步驟</string>
+
+    <string name="serving">服務</string>
+
+    <string name="add_photo">添加照片</string>
+
+    <string name="description">描述</string>
+
+    <string name="recipe_name">配方名稱</string>
+
+    <string name="add_new_recipe">添加新配方</string>
+
+    <string name="recipeDetails">食譜詳情</string>
+
+    <string name="amount">數量</string>
+
+    <string name="ingredient">成分</string>
+
+    <string name="action_search">搜索</string>
+
+    <string name="servings">份量：</string>
+
+    <string name="ingredients">原料：</string>
+
+    <string name="recipe_details">食譜詳情</string>
+
+    <string name="confirm_delete">你確定你要刪除</string>
+
+    <string name="yes">是的</string>
+
+    <string name="deleted">已刪除</string>
+
+    <string name="no">不</string>
+
+    <string name="edit_recipe">編輯食譜</string>
+
+    <string name="from_existing_files">從現有文件</string>
+
+    <string name="take_a_photo">拍個照</string>
+
+    <string name="confirm_delete_photo">你想刪除照片嗎</string>
+
+    <string name="empty_shopping">購物車目前是空的</string>
+
+    <string name="export_desc">將其用於文件備份、數據傳輸到新設備或共享配方</string>
+
+    <string name="import_desc">導入此應用程序生成的文本文件，將其所有食譜添加到您的設備中。這不會改變您現有的任何食譜。</string>
+
+    <string name="setting">環境</string>
+
+    <string name="shopping_cart">購物車</string>
+
+    <string name="enable_dark_mode">啟用暗模式</string>
+
+    <string name="export_as_text_file">導出為文本文件</string>
+
+    <string name="light_mode">輕主題</string>
+
+    <string name="import_a_text_file">導入文本文件</string>
+
+    <string name="dark_mode">深色主題</string>
+
+    <string name="add_to_favourite">添加到收藏夾</string>
+
+    <string name="add_more_ingredients">添加更多成分</string>
+
+    <string name="egg">蛋</string>
+
+    <string name="salt">茶匙鹽</string>
+
+    <string name="your_recipe_name">你的食譜名稱</string>
+
+    <string name="short_desc">關於食譜的簡短描述...</string>
+
+    <string name="clear_cart">清除購物車</string>
+
+</resources>

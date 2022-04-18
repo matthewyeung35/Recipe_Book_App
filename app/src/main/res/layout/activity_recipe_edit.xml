@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnFavourite"
                     android:layout_centerHorizontal="true"
-                    android:text="Add to favourite" />
+                    android:text="@string/add_to_favourite" />
 
             </RelativeLayout>
 
@@ -124,7 +124,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/secondary"
-                android:text="Add more ingredients"
+                android:text="@string/add_more_ingredients"
                 android:textAllCaps="false" />
 
 

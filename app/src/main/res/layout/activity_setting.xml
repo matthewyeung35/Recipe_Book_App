@@ -21,15 +21,59 @@
             android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/setDarkModeLayout"
+                android:id="@+id/setLanguageLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Language"
+                    android:textColor="@color/maintext"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/txtSetLanguageDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLanguage"
+                    android:text="Language"
+                    android:textColor="@color/secondarytext"
+                    android:textSize="16dp" />
+
+
+                <Spinner
+                    android:id="@+id/spinnerLanguage"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    >
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/setDarkModeLayout"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/setDarkModeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setLanguageLayout"
+                android:layout_marginTop="30dp">
 
                 <TextView
                     android:id="@+id/txtSetDarkMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Enable dark mode"
+                    android:text="@string/enable_dark_mode"
                     android:textColor="@color/maintext"
                     android:textSize="20dp" />
 
@@ -38,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtSetDarkMode"
-                    android:text="Light mode"
+                    android:text="@string/light_mode"
                     android:textColor="@color/secondarytext"
                     android:textSize="16dp" />
 
@@ -68,7 +112,7 @@
                     android:id="@+id/txtExport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Export as text file"
+                    android:text="@string/export_as_text_file"
                     android:textColor="@color/maintext"
                     android:textSize="20dp" />
 
@@ -88,8 +132,8 @@
                     android:layout_below="@+id/txtExportDesc"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Export as txt"
-                    android:backgroundTint="@color/secondary"/>
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/export_as_txt" />
             </RelativeLayout>
 
             <View
@@ -110,7 +154,7 @@
                     android:id="@+id/txtImport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Import a text file"
+                    android:text="@string/import_a_text_file"
                     android:textColor="@color/maintext"
                     android:textSize="20dp" />
 
@@ -130,8 +174,8 @@
                     android:layout_below="@+id/txtImportDesc"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Import a txt"
-                    android:backgroundTint="@color/secondary"/>
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/import_a_txt" />
             </RelativeLayout>
 
 

@@ -4,18 +4,24 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -33,6 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Set;
 
 public class SettingActivity extends AppCompatActivity {
     private final static String TAG = "SettingActivity";
@@ -54,6 +62,9 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        // language
+        language();
+
         // dark mode button
         darkMode();
 
@@ -65,6 +76,66 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+    private void language() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Language, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerLanguage.setAdapter(adapter);
+        binding.spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 1:
+                        Toast.makeText(SettingActivity.this, "en", Toast.LENGTH_SHORT).show();
+                        setLocale("en");
+                        break;
+                    case 2:
+                        Toast.makeText(SettingActivity.this, "ch", Toast.LENGTH_SHORT).show();
+                        setLocale("zh_HK_#Hant");
+                        break;
+                    case 3:
+                        Toast.makeText(SettingActivity.this, "ja", Toast.LENGTH_SHORT).show();
+                        setLocale("ja");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        binding.txtLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Config: " + getResources().getConfiguration());
+                finish();
+                startActivity(getIntent());
+            }
+        });
+    }
+    private void setLocale(String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+
+        Configuration config = getResources().getConfiguration();
+        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + config);
+        config.setLocale(locale);
+        config.setLayoutDirection(locale);
+        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + config);
+
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        binding.txtSetLanguageDesc.setText(R.string.language_name);
+
+    }
+
     // button to switch between dark and light mode
     private void darkMode() {
         // set initial button value
@@ -72,10 +143,10 @@ public class SettingActivity extends AppCompatActivity {
         String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME,UserSettings.LIGHT_THEME);
         if (theme.equals(UserSettings.LIGHT_THEME)){
             binding.settingDarkMode.setChecked(false);
-            binding.txtSetDarkModeDesc.setText("Light theme");
+            binding.txtSetDarkModeDesc.setText(R.string.light_mode);
         }else{
             binding.settingDarkMode.setChecked(true);
-            binding.txtSetDarkModeDesc.setText("Dark theme");
+            binding.txtSetDarkModeDesc.setText(R.string.dark_mode);
         }
         // on click listener for dark mode button
         binding.settingDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -86,13 +157,13 @@ public class SettingActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = SettingActivity.this.getSharedPreferences(UserSettings.PREFERENCE, Context.MODE_PRIVATE).edit();
                     editor.putString(UserSettings.CUSTOM_THEME, UserSettings.DARK_THEME);
                     editor.apply();
-                    binding.txtSetDarkModeDesc.setText("Dark theme");
+                    binding.txtSetDarkModeDesc.setText(R.string.dark_mode);
                 }else{
                     //light
                     SharedPreferences.Editor editor = SettingActivity.this.getSharedPreferences(UserSettings.PREFERENCE, Context.MODE_PRIVATE).edit();
                     editor.putString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
                     editor.apply();
-                    binding.txtSetDarkModeDesc.setText("Light theme");
+                    binding.txtSetDarkModeDesc.setText(R.string.light_mode);
                 }
                 themeSetter();
             }

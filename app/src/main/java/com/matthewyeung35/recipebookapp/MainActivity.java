@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        //TODO Create a initial splash screen
-
         //initialize database on create
         dataBaseHelper = new DataBaseHelper(this);
         ArrayList<Recipe> recipes = dataBaseHelper.getDb();
@@ -54,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
             byte[] img = new byte[0];
             String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
             ArrayList<Ingredient> testing_ingredient = new ArrayList<Ingredient>();
-            testing_ingredient.add(new Ingredient(1,"egg"));
-            testing_ingredient.add(new Ingredient(0.5F,"tsbp salt"));
-            Recipe new_recipe = new Recipe(-1,"Your recipe name", encodedImage, 1, testing_ingredient,"Short description about the recipe...", "cooking steps", "extra comments", false);
+            testing_ingredient.add(new Ingredient(1,getString(R.string.egg)));
+            testing_ingredient.add(new Ingredient(0.5F,getString(R.string.salt)));
+            Recipe new_recipe = new Recipe(-1,getString(R.string.your_recipe_name), encodedImage, 1, testing_ingredient,getString(R.string.short_desc), getString(R.string.cooking_steps), getString(R.string.extra_comments), false);
             dataBaseHelper.addOne(new_recipe);
         }
         //initialize views
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, RecipeEdit.class);
                 startActivity(intent);
+
             }
         });
 

@@ -1,0 +1,132 @@
+<resources>
+
+    <string name="app_name">簡単なレシピ</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+
+    <string name="nav_header_title">簡単なレシピ</string>
+
+    <string name="nav_header_subtitle">あなたの個人的なレシピ本</string>
+
+    <string name="nav_header_desc">ナビゲーションヘッダー</string>
+
+    <string name="action_settings">設定</string>
+
+    <string name="menu_home">私のレシピ</string>
+
+    <string name="menu_gallery">ギャラリー</string>
+
+    <string name="menu_shopping">買い物リスト</string>
+
+    <string name="menu_setting">設定</string>
+
+    <string name="hello_blank_fragment">こんにちは空白のフラグメント</string>
+
+    <string name="menu_favourite">お気に入り</string>
+
+    <string name="recipeEditName">レシピエディター</string>
+
+    <string name="extra_comments">追加コメント</string>
+
+    <string name="add_recipe">レシピを追加</string>
+
+    <string name="cooking_steps">調理手順</string>
+
+    <string name="serving">サービング</string>
+
+    <string name="add_photo">写真を追加</string>
+
+    <string name="description">説明</string>
+
+    <string name="recipe_name">レシピ名</string>
+
+    <string name="add_new_recipe">新しいレシピを追加する</string>
+
+    <string name="recipeDetails">レシピの詳細</string>
+
+    <string name="amount">額</string>
+
+    <string name="ingredient">成分</string>
+
+    <string name="action_search">探す</string>
+
+    <string name="servings">サービング：</string>
+
+    <string name="ingredients">材料：</string>
+
+    <string name="recipe_details">レシピの詳細</string>
+
+    <string name="confirm_delete">消去してもよろしいですか</string>
+
+    <string name="yes">はい</string>
+
+    <string name="deleted">削除</string>
+
+    <string name="no">いいえ</string>
+
+    <string name="edit_recipe">レシピの編集</string>
+
+    <string name="from_existing_files">既存のファイルから</string>
+
+    <string name="take_a_photo">写真を撮る</string>
+
+    <string name="confirm_delete_photo">写真を削除しますか</string>
+
+    <string name="empty_shopping">ショッピングカートは現在空です</string>
+
+    <string name="export_desc">これを使用して、ファイルのバックアップ、新しいデバイスへのデータ転送、またはレシピの共有を行います</string>
+
+    <string name="import_desc">このアプリによって生成されたテキストファイルをインポートして、すべてのレシピをデバイスに追加します。これにより、既存のレシピが変更されることはありません。</string>
+
+    <string name="setting">設定</string>
+
+    <string name="shopping_cart">ショッピングカート</string>
+
+    <string name="enable_dark_mode">ダークモードを有効にする</string>
+
+    <string name="export_as_text_file">テキストファイルとしてエクスポート</string>
+
+    <string name="light_mode">軽いテーマ</string>
+
+    <string name="import_a_text_file">テキストファイルをインポートする</string>
+
+    <string name="dark_mode">暗いテーマ</string>
+
+    <string name="add_to_favourite">お気に入りに追加</string>
+
+    <string name="add_more_ingredients">材料を追加する</string>
+
+    <string name="egg">卵</string>
+
+    <string name="salt">tsbpソルト</string>
+
+    <string name="your_recipe_name">あなたのレシピ名</string>
+
+    <string name="short_desc">レシピについての簡単な説明...</string>
+
+    <string name="clear_cart">クリアショッピングカート</string>
+
+    <string name="export_as_txt">txtとしてエクスポート</string>
+
+    <string name="import_a_txt">txtをインポートする</string>
+
+    <string name="language_name">英語</string>
+
+
+    -<string-array name="Language">
+
+    <item>英語</item>
+
+    <item>中国の伝統的な）</item>
+
+    <item>日本</item>
+
+    <item>スペイン語</item>
+
+</string-array>
+
+
+
+</resources>
