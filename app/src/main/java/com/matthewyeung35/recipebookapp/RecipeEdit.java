@@ -310,7 +310,7 @@ public class RecipeEdit extends AppCompatActivity {
                 // for adding image, if there is a image then turn it to a byte[], if there is no image then use a empty byte[] instead
                 if (bitmap != null){
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
                     img = bos.toByteArray();
                     Log.d(TAG, "bit map yes" + img.length);
                 }else{

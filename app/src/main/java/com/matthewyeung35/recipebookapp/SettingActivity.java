@@ -53,7 +53,6 @@ public class SettingActivity extends AppCompatActivity {
 
         binding = ActivitySettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         // back button
         binding.detailBar.barBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,45 +73,61 @@ public class SettingActivity extends AppCompatActivity {
         // import txt
         importTxt();
 
+        binding.txtLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("ja");
+            }
+        });
+
     }
 
+//    not working
     private void language() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Language, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerLanguage.setAdapter(adapter);
+//        binding.spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                switch (position){
+//                    case 1:
+//                        Toast.makeText(SettingActivity.this, "en", Toast.LENGTH_SHORT).show();
+//                        setLocale("en");
+//                        break;
+//                    case 2:
+//                        Toast.makeText(SettingActivity.this, "ch", Toast.LENGTH_SHORT).show();
+//                        setLocale("zh_HK_#Hant");
+//                        break;
+//                    case 3:
+//                        Toast.makeText(SettingActivity.this, "ja", Toast.LENGTH_SHORT).show();
+//                        setLocale("ja");
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
         binding.spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                    case 1:
-                        Toast.makeText(SettingActivity.this, "en", Toast.LENGTH_SHORT).show();
-                        setLocale("en");
-                        break;
-                    case 2:
-                        Toast.makeText(SettingActivity.this, "ch", Toast.LENGTH_SHORT).show();
-                        setLocale("zh_HK_#Hant");
-                        break;
-                    case 3:
-                        Toast.makeText(SettingActivity.this, "ja", Toast.LENGTH_SHORT).show();
-                        setLocale("ja");
-                        break;
                     default:
+                        Toast.makeText(SettingActivity.this, "not implemented", Toast.LENGTH_SHORT).show();
                         break;
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-        binding.txtLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Config: " + getResources().getConfiguration());
-                finish();
-                startActivity(getIntent());
             }
         });
     }
@@ -121,11 +136,13 @@ public class SettingActivity extends AppCompatActivity {
         Locale.setDefault(locale);
 
 
-        Configuration config = getResources().getConfiguration();
-        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + config);
-        config.setLocale(locale);
-        config.setLayoutDirection(locale);
-        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + config);
+        Configuration configuration = getResources().getConfiguration();
+        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + configuration);
+        configuration.setLocale(locale);
+        configuration.setLayoutDirection(locale);
+        Log.d(TAG, "Locale: " + String.valueOf(locale) + " config: " + configuration);
+        finish();
+        startActivity(getIntent());
 
     }
 
